@@ -1,6 +1,7 @@
 namespace SCEngine;
 
-static class Program {
+public static class Program {
+    public static Thread SCThread;
     /// <summary>
     ///  The main entry point for the application.
     /// </summary>
@@ -9,6 +10,8 @@ static class Program {
         // To customize application configuration such as set high DPI settings or default font,
         // see https://aka.ms/applicationconfiguration.
         ApplicationConfiguration.Initialize();
-        Application.Run(new Form1());
+        SCThread = new Thread(() => Game.Program.EntryPoint());
+        SCThread.Start();
+        Application.Run(new MainForm());
     }
 }
