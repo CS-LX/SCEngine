@@ -7,6 +7,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SCEngine", "SCEngine\SCEngi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Survivalcraft", "survivalcraft-api\Survivalcraft\Survivalcraft.csproj", "{5ECC3033-D71C-4745-BE05-635B522D023F}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntitySystem", "survivalcraft-api\EntitySystem\EntitySystem.csproj", "{240E1F0D-2ACC-4FDE-8A08-70956CA2156B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SC_Game", "SC_Game", "{890079F9-EDB0-4A35-BAB1-CF983428C759}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Engine", "survivalcraft-api\Engine\Engine.csproj", "{2E0C1AB2-04D7-4D6B-875B-E3CC8BD8ECBE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NAudio.Flac", "survivalcraft-api\Engine\reference\NAudio.Flac\NAudio.Flac\NAudio.Flac.csproj", "{01F5051F-28C9-4FB7-8207-6D9EFF4C07D1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,9 +29,27 @@ Global
 		{5ECC3033-D71C-4745-BE05-635B522D023F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5ECC3033-D71C-4745-BE05-635B522D023F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5ECC3033-D71C-4745-BE05-635B522D023F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{240E1F0D-2ACC-4FDE-8A08-70956CA2156B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{240E1F0D-2ACC-4FDE-8A08-70956CA2156B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{240E1F0D-2ACC-4FDE-8A08-70956CA2156B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{240E1F0D-2ACC-4FDE-8A08-70956CA2156B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E0C1AB2-04D7-4D6B-875B-E3CC8BD8ECBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E0C1AB2-04D7-4D6B-875B-E3CC8BD8ECBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E0C1AB2-04D7-4D6B-875B-E3CC8BD8ECBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E0C1AB2-04D7-4D6B-875B-E3CC8BD8ECBE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{01F5051F-28C9-4FB7-8207-6D9EFF4C07D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01F5051F-28C9-4FB7-8207-6D9EFF4C07D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01F5051F-28C9-4FB7-8207-6D9EFF4C07D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01F5051F-28C9-4FB7-8207-6D9EFF4C07D1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5ECC3033-D71C-4745-BE05-635B522D023F} = {890079F9-EDB0-4A35-BAB1-CF983428C759}
+		{240E1F0D-2ACC-4FDE-8A08-70956CA2156B} = {890079F9-EDB0-4A35-BAB1-CF983428C759}
+		{2E0C1AB2-04D7-4D6B-875B-E3CC8BD8ECBE} = {890079F9-EDB0-4A35-BAB1-CF983428C759}
+		{01F5051F-28C9-4FB7-8207-6D9EFF4C07D1} = {890079F9-EDB0-4A35-BAB1-CF983428C759}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AD0F86CB-D266-4856-A4E7-D44E77BD68BC}
