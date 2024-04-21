@@ -6,4 +6,7 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<TargetFramework>net8.0-windows</TargetFramework>
 	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="DarkUI.Net5.0" Version="1.0.0" />
+	</ItemGroup>
 </Project>
