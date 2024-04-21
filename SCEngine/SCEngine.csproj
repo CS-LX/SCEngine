@@ -7,6 +7,25 @@
 		<TargetFramework>net8.0-windows</TargetFramework>
 	</PropertyGroup>
 	<ItemGroup>
+	  <COMReference Include="SystemMonitor">
+	    <WrapperTool>tlbimp</WrapperTool>
+	    <VersionMinor>7</VersionMinor>
+	    <VersionMajor>3</VersionMajor>
+	    <Guid>1b773e42-2509-11cf-942f-008029004347</Guid>
+	    <Lcid>0</Lcid>
+	    <Isolated>false</Isolated>
+	    <EmbedInteropTypes>true</EmbedInteropTypes>
+	  </COMReference>
+	  <COMReference Include="AxSystemMonitor">
+	    <WrapperTool>aximp</WrapperTool>
+	    <VersionMinor>7</VersionMinor>
+	    <VersionMajor>3</VersionMajor>
+	    <Guid>1b773e42-2509-11cf-942f-008029004347</Guid>
+	    <Lcid>0</Lcid>
+	    <Isolated>false</Isolated>
+	  </COMReference>
+	</ItemGroup>
+	<ItemGroup>
 		<PackageReference Include="DarkUI.Net5.0" Version="1.0.0" />
 	</ItemGroup>
 	<ItemGroup>
@@ -19,6 +38,9 @@
 	    <DesignTime>True</DesignTime>
 	    <AutoGen>True</AutoGen>
 	    <DependentUpon>Resources.resx</DependentUpon>
+	  </Compile>
+	  <Compile Update="子窗口\InspectorWindow.cs">
+	    <SubType>UserControl</SubType>
 	  </Compile>
 	</ItemGroup>
 	<ItemGroup>

@@ -60,5 +60,13 @@ namespace SCEngine {
         private void autoUpdateChechBox_CheckedChanged(object sender, EventArgs e) {
             updateTimer.Enabled = autoUpdateChechBox.Checked;
         }
+
+        private void entitiesView_SelectedNodesChanged(object sender, EventArgs e) {
+            propertriesGrid.SelectedObject = null;
+            object? selectedObject = entitiesView.SelectedNodes.FirstOrDefault()?.Tag ?? null;
+            if (selectedObject != null) {
+                propertriesGrid.SelectedObject = selectedObject;
+            }
+        }
     }
 }
