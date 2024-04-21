@@ -1,0 +1,3 @@
+[submodule "survivalcraft-api"]
+	path = survivalcraft-api
+	url = git@gitee.com:THPRC/survivalcraft-api.git
