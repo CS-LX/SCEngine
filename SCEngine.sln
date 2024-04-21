@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SCEngine", "SCEngine\SCEngine.csproj", "{83F701AB-48BF-4157-A483-2A791FE9C16F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{83F701AB-48BF-4157-A483-2A791FE9C16F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83F701AB-48BF-4157-A483-2A791FE9C16F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83F701AB-48BF-4157-A483-2A791FE9C16F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83F701AB-48BF-4157-A483-2A791FE9C16F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
