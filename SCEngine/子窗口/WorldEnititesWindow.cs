@@ -11,6 +11,7 @@ using DarkUI.Controls;
 using DarkUI.Docking;
 using Entity = GameEntitySystem.Entity;
 using Component = GameEntitySystem.Component;
+using Game;
 
 namespace SCEngine {
     public partial class WorldEnititesWindow : DarkToolWindow {
@@ -29,9 +30,12 @@ namespace SCEngine {
                     //实体
                     DarkTreeNode enitiyNode = new DarkTreeNode();
                     enitiyNode.Tag = entity;
-                    enitiyNode.Text = entity.GetType().ToString();
+                    string entitySummary = TryGetSummary(entity);
+                    enitiyNode.Text = entity.GetType().Name + (entitySummary.Length > 0 ? $" ({entitySummary})" : string.Empty);
                     entitiesView.Nodes.Add(enitiyNode);
                     if (selectedObject == entity) willSelectNode = enitiyNode;
+
+                    //组件
                     foreach (Component component in entity.Components) {
                         DarkTreeNode componentNode = new DarkTreeNode();
                         componentNode.Tag = component;
@@ -43,6 +47,15 @@ namespace SCEngine {
                 catch { }
             }
             if (willSelectNode != null) entitiesView.SelectNode(willSelectNode);
+        }
+
+        private string TryGetSummary(Entity entity) {
+            if (entity == null) return string.Empty;
+
+            ComponentCreature componentCreature = entity.FindComponent<ComponentCreature>(false);
+            if (componentCreature != null) return componentCreature.DisplayName;
+
+            return string.Empty;
         }
 
         private void WorldEnititesWindow_Load(object sender, EventArgs e) {
