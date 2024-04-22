@@ -35,7 +35,12 @@ namespace SCEngine {
 
             // 创建字段的 PropertyDescriptor 集合
             foreach (var field in fields) {
-                _fieldDescriptors[field.Name] = new FieldPropertyDescriptor(field);
+                if (field.FieldType == typeof(Vector3)) {
+                    _fieldDescriptors[field.Name] = new FieldPropertyDescriptor(field, new Attribute[] { new TypeConverterAttribute(typeof(Vector3TypeConverter)) });
+                }
+                else {
+                    _fieldDescriptors[field.Name] = new FieldPropertyDescriptor(field);
+                }
             }
         }
 
@@ -76,24 +81,10 @@ namespace SCEngine {
             }
 
             public override object GetValue(object component) {
-                if (_property.PropertyType == typeof(Vector3)) {
-                    var vector3 = (Vector3)_property.GetValue(component);
-                    return $"{vector3.X}, {vector3.Y}, {vector3.Z}";
-                }
                 return _property.GetValue(component);
             }
 
             public override void SetValue(object component, object value) {
-                if (_property.PropertyType == typeof(Vector3)) {
-                    if (value is string str) {
-                        var parts = str.Split(',');
-                        if (parts.Length == 3 && float.TryParse(parts[0], out float x) && float.TryParse(parts[1], out float y) && float.TryParse(parts[2], out float z)) {
-                            _property.SetValue(component, new Vector3(x, y, z));
-                            return;
-                        }
-                    }
-                    throw new ArgumentException("Invalid Vector3 format. Use 'X, Y, Z' format.");
-                }
                 _property.SetValue(component, value);
             }
 
@@ -127,24 +118,24 @@ namespace SCEngine {
             }
 
             public override object GetValue(object component) {
-                if (_field.FieldType == typeof(Vector3)) {
-                    var vector3 = (Vector3)_field.GetValue(component);
-                    return $"{vector3.X}, {vector3.Y}, {vector3.Z}";
-                }
+                //if (_field.FieldType == typeof(Vector3)) {
+                //    var vector3 = (Vector3)_field.GetValue(component);
+                //    return $"{vector3.X}, {vector3.Y}, {vector3.Z}";
+                //}
                 return _field.GetValue(component);
             }
 
             public override void SetValue(object component, object value) {
-                if (_field.FieldType == typeof(Vector3)) {
-                    if (value is string str) {
-                        var parts = str.Split(',');
-                        if (parts.Length == 3 && float.TryParse(parts[0], out float x) && float.TryParse(parts[1], out float y) && float.TryParse(parts[2], out float z)) {
-                            _field.SetValue(component, new Vector3(x, y, z));
-                            return;
-                        }
-                    }
-                    throw new ArgumentException("Invalid Vector3 format. Use 'X, Y, Z' format.");
-                }
+                //if (_field.FieldType == typeof(Vector3)) {
+                //    if (value is string str) {
+                //        var parts = str.Split(',');
+                //        if (parts.Length == 3 && float.TryParse(parts[0], out float x) && float.TryParse(parts[1], out float y) && float.TryParse(parts[2], out float z)) {
+                //            _field.SetValue(component, new Vector3(x, y, z));
+                //            return;
+                //        }
+                //    }
+                //    throw new ArgumentException("Invalid Vector3 format. Use 'X, Y, Z' format.");
+                //}
                 _field.SetValue(component, value);
             }
 
@@ -186,16 +177,114 @@ namespace SCEngine {
         }
     }
 
-    public class Vector3TypeConverter : TypeConverter {
-        public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType) {
-            return destinationType == typeof(string);
+    public class Vector3TypeConverter : ExpandableObjectConverter {
+        public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType) {
+            if (sourceType == typeof(string)) {
+                return true;
+            }
+            return base.CanConvertFrom(context, sourceType);
+        }
+
+        public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value) {
+            if (value is string strValue) {
+                try {
+                    string[] parts = strValue.Split(',');
+                    if (parts.Length == 3 &&
+                        float.TryParse(parts[0], out float x) &&
+                        float.TryParse(parts[1], out float y) &&
+                        float.TryParse(parts[2], out float z)) {
+                        return new Vector3(x, y, z);
+                    }
+                }
+                catch (Exception) {
+                    throw new ArgumentException("Invalid Vector3 format. Please use format 'X, Y, Z'.");
+                }
+            }
+            return base.ConvertFrom(context, culture, value);
         }
 
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType) {
-            if (value is Vector3 vector3 && destinationType == typeof(string)) {
+            if (destinationType == typeof(string) && value is Vector3 vector3) {
                 return $"{vector3.X}, {vector3.Y}, {vector3.Z}";
             }
             return base.ConvertTo(context, culture, value, destinationType);
+        }
+
+        public override PropertyDescriptorCollection GetProperties(ITypeDescriptorContext context, object value, Attribute[] attributes) {
+            PropertyDescriptorCollection baseProps = base.GetProperties(context, value, attributes);
+            PropertyDescriptor[] props = new PropertyDescriptor[3];
+            props[0] = new Vector3PropertyDescriptor("X", typeof(float), context);
+            props[1] = new Vector3PropertyDescriptor("Y", typeof(float), context);
+            props[2] = new Vector3PropertyDescriptor("Z", typeof(float), context);
+            return new PropertyDescriptorCollection(props);
+        }
+
+        public override bool GetPropertiesSupported(ITypeDescriptorContext context) {
+            return true;
+        }
+    }
+
+    public class Vector3PropertyDescriptor : PropertyDescriptor {
+        private readonly string _propertyName;
+        private readonly Type _propertyType;
+        private readonly ITypeDescriptorContext context;
+
+        public Vector3PropertyDescriptor(string propertyName, Type propertyType, ITypeDescriptorContext context)
+            : base(propertyName, null) {
+            _propertyName = propertyName;
+            _propertyType = propertyType;
+            this.context = context;
+        }
+
+        public override Type ComponentType => typeof(Vector3);
+
+        public override bool IsReadOnly => false;
+
+        public override Type PropertyType => _propertyType;
+
+        public override bool CanResetValue(object component) => false;
+
+        public override object GetValue(object component) {
+            Vector3 vector = (Vector3)component;
+            switch (_propertyName) {
+                case "X":
+                    return vector.X;
+                case "Y":
+                    return vector.Y;
+                case "Z":
+                    return vector.Z;
+                default:
+                    throw new ArgumentException($"Invalid property name: {_propertyName}");
+            }
+        }
+
+        public override void SetValue(object component, object value) {
+            Vector3 vector = (Vector3)component;
+            float floatValue = Convert.ToSingle(value);
+            switch (_propertyName) {
+                case "X":
+                    vector = new Vector3(floatValue, vector.Y, vector.Z);
+                    break;
+                case "Y":
+                    vector = new Vector3(vector.X, floatValue, vector.Z);
+                    break;
+                case "Z":
+                    vector = new Vector3(vector.X, vector.Y, floatValue);
+                    break;
+                default:
+                    throw new ArgumentException($"Invalid property name: {_propertyName}");
+            }
+            // 将更新后的 Vector3 对象的值设置回原始对象
+            context.PropertyDescriptor.SetValue(context, vector);
+        }
+
+        public override void ResetValue(object component) {
+            // Not implemented
+        }
+
+        public override bool ShouldSerializeValue(object component) {
+            // Not implemented
+            return false;
         }
     }
 }

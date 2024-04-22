@@ -47,7 +47,7 @@ namespace SCEngine {
             // 
             entitiesView.Dock = DockStyle.Fill;
             entitiesView.Location = new Point(0, 0);
-            entitiesView.MaxDragChange = 20;
+            entitiesView.MaxDragChange = 50;
             entitiesView.Name = "entitiesView";
             entitiesView.ShowIcons = true;
             entitiesView.Size = new Size(463, 499);
