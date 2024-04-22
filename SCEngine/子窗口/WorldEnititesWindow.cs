@@ -14,6 +14,7 @@ using Component = GameEntitySystem.Component;
 using Game;
 using System.Globalization;
 using System.Reflection;
+using DarkUI.Forms;
 
 namespace SCEngine {
     public partial class WorldEnititesWindow : DarkToolWindow {
@@ -22,33 +23,42 @@ namespace SCEngine {
         }
 
         public void UpdateEnitites() {//更新实体
-            object? selectedObject = entitiesView.SelectedNodes.FirstOrDefault()?.Tag ?? null;
-
-            entitiesView.Nodes.Clear();
             if (Game.GameManager.Project == null) return;
-            DarkTreeNode willSelectNode = null;
-            foreach (Entity entity in Game.GameManager.Project.Entities) {
-                try {
-                    //实体
-                    DarkTreeNode enitiyNode = new DarkTreeNode();
-                    enitiyNode.Tag = entity;
-                    string entitySummary = TryGetSummary(entity);
-                    enitiyNode.Text = entitySummary;
-                    entitiesView.Nodes.Add(enitiyNode);
-                    if (selectedObject == entity) willSelectNode = enitiyNode;
 
-                    //组件
-                    foreach (Component component in entity.Components) {
-                        DarkTreeNode componentNode = new DarkTreeNode();
-                        componentNode.Tag = component;
-                        componentNode.Text = component.GetType().ToString();
-                        enitiyNode.Nodes.Add(componentNode);
-                        if (selectedObject == component) willSelectNode = componentNode;
+            //如果存在project里面有而view里面没有的实体，就添加
+            var tempEntities = GameManager.Project.Entities.ToList();
+            foreach (Entity entity in tempEntities) {
+                try {
+                    bool hasContains = entitiesView.Nodes.Any(node => node.Tag == entity);
+
+                    if (!hasContains) {
+                        //实体
+                        DarkTreeNode enitiyNode = new DarkTreeNode();
+                        enitiyNode.Tag = entity;
+                        string entitySummary = TryGetSummary(entity);
+                        enitiyNode.Text = entitySummary;
+                        entitiesView.Nodes.Add(enitiyNode);
+
+                        //组件
+                        foreach (Component component in entity.Components) {
+                            DarkTreeNode componentNode = new DarkTreeNode();
+                            componentNode.Tag = component;
+                            componentNode.Text = component.GetType().ToString();
+                            enitiyNode.Nodes.Add(componentNode);
+                        }
                     }
+
                 }
-                catch { }
+                catch {
+                    continue;
+                }
             }
-            if (willSelectNode != null) entitiesView.SelectNode(willSelectNode);
+
+            var tempPreviousNodes = entitiesView.Nodes.ToList();
+            foreach (DarkTreeNode previousNode in tempPreviousNodes) {
+                if (!GameManager.Project.Entities.Contains(previousNode.Tag)) entitiesView.Nodes.Remove(previousNode);
+            }
+
         }
 
         private string TryGetSummary(Entity entity) {

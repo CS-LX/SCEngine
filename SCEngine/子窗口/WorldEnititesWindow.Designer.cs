@@ -70,6 +70,8 @@ namespace SCEngine {
             // 
             autoUpdateChechBox.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             autoUpdateChechBox.AutoSize = true;
+            autoUpdateChechBox.Checked = true;
+            autoUpdateChechBox.CheckState = CheckState.Checked;
             autoUpdateChechBox.Location = new Point(830, 530);
             autoUpdateChechBox.Name = "autoUpdateChechBox";
             autoUpdateChechBox.Size = new Size(91, 24);
