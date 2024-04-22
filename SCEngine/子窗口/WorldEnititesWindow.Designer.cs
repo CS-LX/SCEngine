@@ -29,8 +29,8 @@ namespace SCEngine {
             updateButton = new DarkUI.Controls.DarkButton();
             autoUpdateChechBox = new DarkUI.Controls.DarkCheckBox();
             splitContainer1 = new SplitContainer();
-            propertriesGrid = new PropertyGrid();
             darkSectionPanel1 = new DarkUI.Controls.DarkSectionPanel();
+            propertriesGrid = new PropertyGrid();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
             splitContainer1.Panel1.SuspendLayout();
             splitContainer1.Panel2.SuspendLayout();
@@ -94,6 +94,16 @@ namespace SCEngine {
             splitContainer1.SplitterDistance = 463;
             splitContainer1.TabIndex = 3;
             // 
+            // darkSectionPanel1
+            // 
+            darkSectionPanel1.Controls.Add(propertriesGrid);
+            darkSectionPanel1.Dock = DockStyle.Fill;
+            darkSectionPanel1.Location = new Point(0, 0);
+            darkSectionPanel1.Name = "darkSectionPanel1";
+            darkSectionPanel1.SectionHeader = "成员属性";
+            darkSectionPanel1.Size = new Size(457, 499);
+            darkSectionPanel1.TabIndex = 0;
+            // 
             // propertriesGrid
             // 
             propertriesGrid.CategoryForeColor = Color.FromArgb(122, 128, 132);
@@ -115,16 +125,6 @@ namespace SCEngine {
             propertriesGrid.ViewBackColor = Color.FromArgb(60, 63, 65);
             propertriesGrid.ViewBorderColor = Color.FromArgb(51, 51, 51);
             propertriesGrid.ViewForeColor = Color.Gainsboro;
-            // 
-            // darkSectionPanel1
-            // 
-            darkSectionPanel1.Controls.Add(propertriesGrid);
-            darkSectionPanel1.Dock = DockStyle.Fill;
-            darkSectionPanel1.Location = new Point(0, 0);
-            darkSectionPanel1.Name = "darkSectionPanel1";
-            darkSectionPanel1.SectionHeader = "Propertries";
-            darkSectionPanel1.Size = new Size(457, 499);
-            darkSectionPanel1.TabIndex = 0;
             // 
             // WorldEnititesWindow
             // 

@@ -33,7 +33,7 @@ namespace SCEngine {
                     DarkTreeNode enitiyNode = new DarkTreeNode();
                     enitiyNode.Tag = entity;
                     string entitySummary = TryGetSummary(entity);
-                    enitiyNode.Text = entity.GetType().Name + (entitySummary.Length > 0 ? $" ({entitySummary})" : string.Empty);
+                    enitiyNode.Text = entitySummary;
                     entitiesView.Nodes.Add(enitiyNode);
                     if (selectedObject == entity) willSelectNode = enitiyNode;
 
@@ -60,7 +60,10 @@ namespace SCEngine {
             ComponentBlockEntity componentBlockEntity = entity.FindComponent<ComponentBlockEntity>(false);
             if (componentBlockEntity != null) return "方块实体";
 
-            return string.Empty;
+            ComponentIntroShip componentIntroShip = entity.FindComponent<ComponentIntroShip>(false);
+            if (componentIntroShip != null) return "初始船";
+
+            return "未知实体";
         }
 
         private void WorldEnititesWindow_Load(object sender, EventArgs e) {
