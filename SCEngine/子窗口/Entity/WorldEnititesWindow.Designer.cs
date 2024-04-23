@@ -120,7 +120,7 @@ namespace SCEngine {
             propertriesGrid.LineColor = Color.FromArgb(51, 51, 51);
             propertriesGrid.Location = new Point(1, 25);
             propertriesGrid.Name = "propertriesGrid";
-            propertriesGrid.SelectedItemWithFocusBackColor = Color.FromArgb(60, 63, 65);
+            propertriesGrid.SelectedItemWithFocusBackColor = Color.FromArgb(69, 73, 74);
             propertriesGrid.SelectedItemWithFocusForeColor = Color.White;
             propertriesGrid.Size = new Size(455, 473);
             propertriesGrid.TabIndex = 0;
