@@ -26,6 +26,9 @@ namespace SCEngine {
                 if (prop.PropertyType == typeof(Vector3)) {
                     _propertyDescriptors[prop.Name] = new PropertyPropertyDescriptor(prop, new Attribute[] { new TypeConverterAttribute(typeof(Vector3TypeConverter)) });
                 }
+                else if (prop.PropertyType == typeof(Quaternion)) {
+                    _propertyDescriptors[prop.Name] = new PropertyPropertyDescriptor(prop, new Attribute[] { new TypeConverterAttribute(typeof(QuaternionTypeConverter)) });
+                }
                 else {
                     _propertyDescriptors[prop.Name] = new PropertyPropertyDescriptor(prop);
                 }
@@ -38,6 +41,9 @@ namespace SCEngine {
             foreach (var field in fields) {
                 if (field.FieldType == typeof(Vector3)) {
                     _fieldDescriptors[field.Name] = new FieldPropertyDescriptor(field, new Attribute[] { new TypeConverterAttribute(typeof(Vector3TypeConverter)) });
+                }
+                else if (field.FieldType == typeof(Quaternion)) {
+                    _fieldDescriptors[field.Name] = new FieldPropertyDescriptor(field, new Attribute[] { new TypeConverterAttribute(typeof(QuaternionTypeConverter)) });
                 }
                 else {
                     _fieldDescriptors[field.Name] = new FieldPropertyDescriptor(field);
@@ -77,6 +83,9 @@ namespace SCEngine {
                     if (_property.PropertyType == typeof(Vector3)) {
                         return typeof(string); // 使用自定义的 TypeConverter 显示为字符串
                     }
+                    else if (_property.PropertyType == typeof(Quaternion)) {
+                        return typeof(string); // 使用自定义的 TypeConverter 显示为字符串
+                    }
                     return _property.PropertyType;
                 }
             }
@@ -112,6 +121,9 @@ namespace SCEngine {
             public override Type PropertyType {
                 get {
                     if (_field.FieldType == typeof(Vector3)) {
+                        return typeof(string); // 使用自定义的 TypeConverter 显示为字符串
+                    }
+                    else if (_field.FieldType == typeof(Quaternion)) {
                         return typeof(string); // 使用自定义的 TypeConverter 显示为字符串
                     }
                     return _field.FieldType;
@@ -268,6 +280,131 @@ namespace SCEngine {
             if (propertyDescriptor != null && propertyInstance is AutoBrowsableTypeDescriptor descriptor) {
                 // 将新的 Vector3 值设置到属性描述符所属的类实例中
                 propertyDescriptor.SetValue(descriptor._instance, vector);
+            }
+        }
+
+        public override void ResetValue(object component) {
+            // Not implemented
+        }
+
+        public override bool ShouldSerializeValue(object component) {
+            // Not implemented
+            return false;
+        }
+    }
+
+    public class QuaternionTypeConverter : ExpandableObjectConverter {
+        public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType) {
+            if (sourceType == typeof(string)) {
+                return true;
+            }
+            return base.CanConvertFrom(context, sourceType);
+        }
+
+        public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value) {
+            if (value is string strValue) {
+                try {
+                    string[] parts = strValue.Split(',');
+                    if (parts.Length == 4 &&
+                        float.TryParse(parts[0], out float x) &&
+                        float.TryParse(parts[1], out float y) &&
+                        float.TryParse(parts[2], out float z) &&
+                        float.TryParse(parts[3], out float w)
+                        ) {
+                        return new Quaternion(x, y, z, w);
+                    }
+                }
+                catch (Exception) {
+                    throw new ArgumentException("Invalid Quaternion format. Please use format 'X, Y, Z'.");
+                }
+            }
+            return base.ConvertFrom(context, culture, value);
+        }
+
+        public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType) {
+            if (destinationType == typeof(string) && value is Quaternion quaternion) {
+                return $"{quaternion.X}, {quaternion.Y}, {quaternion.Z}, {quaternion.W}";
+            }
+            return base.ConvertTo(context, culture, value, destinationType);
+        }
+
+        public override PropertyDescriptorCollection GetProperties(ITypeDescriptorContext context, object value, Attribute[] attributes) {
+            PropertyDescriptorCollection baseProps = base.GetProperties(context, value, attributes);
+            PropertyDescriptor[] props = new PropertyDescriptor[4];
+            props[0] = new QuaternionPropertyDescriptor("X", typeof(float), context);
+            props[1] = new QuaternionPropertyDescriptor("Y", typeof(float), context);
+            props[2] = new QuaternionPropertyDescriptor("Z", typeof(float), context);
+            props[3] = new QuaternionPropertyDescriptor("W", typeof(float), context);
+            return new PropertyDescriptorCollection(props);
+        }
+
+        public override bool GetPropertiesSupported(ITypeDescriptorContext context) {
+            return true;
+        }
+    }
+
+    public class QuaternionPropertyDescriptor : PropertyDescriptor {
+        private readonly string _propertyName;
+        private readonly Type _propertyType;
+        private readonly ITypeDescriptorContext context;
+
+        public QuaternionPropertyDescriptor(string propertyName, Type propertyType, ITypeDescriptorContext context)
+            : base(propertyName, null) {
+            _propertyName = propertyName;
+            _propertyType = propertyType;
+            this.context = context;
+        }
+
+        public override Type ComponentType => typeof(Quaternion);
+
+        public override bool IsReadOnly => false;
+
+        public override Type PropertyType => _propertyType;
+
+        public override bool CanResetValue(object component) => false;
+
+        public override object GetValue(object component) {
+            Quaternion quaternion = (Quaternion)component;
+            switch (_propertyName) {
+                case "X":
+                    return quaternion.X;
+                case "Y":
+                    return quaternion.Y;
+                case "Z":
+                    return quaternion.Z;
+                case "W":
+                    return quaternion.W;
+                default:
+                    throw new ArgumentException($"Invalid property name: {_propertyName}");
+            }
+        }
+
+        public override void SetValue(object component, object value) {
+            Quaternion quaternion = (Quaternion)component;
+            float floatValue = Convert.ToSingle(value);
+            switch (_propertyName) {
+                case "X":
+                    quaternion = new Quaternion(floatValue, quaternion.Y, quaternion.Z, quaternion.W);
+                    break;
+                case "Y":
+                    quaternion = new Quaternion(quaternion.X, floatValue, quaternion.Z, quaternion.W);
+                    break;
+                case "Z":
+                    quaternion = new Quaternion(quaternion.X, quaternion.Y, floatValue, quaternion.W);
+                    break;
+                case "W":
+                    quaternion = new Quaternion(quaternion.X, quaternion.Y, quaternion.Z, floatValue); ;
+                    break;
+                default:
+                    throw new ArgumentException($"Invalid property name: {_propertyName}");
+            }
+
+            // 获取对应的属性描述符
+            var propertyDescriptor = context.PropertyDescriptor;
+            var propertyInstance = context.Instance;
+            if (propertyDescriptor != null && propertyInstance is AutoBrowsableTypeDescriptor descriptor) {
+                // 将新的 Vector3 值设置到属性描述符所属的类实例中
+                propertyDescriptor.SetValue(descriptor._instance, quaternion);
             }
         }
 
