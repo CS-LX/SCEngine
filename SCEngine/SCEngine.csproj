@@ -42,6 +42,9 @@
 	  <Compile Update="子窗口\InspectorWindow.cs">
 	    <SubType>UserControl</SubType>
 	  </Compile>
+	  <Compile Update="子窗口\Subsystem\WorldSubsystemsWindow.cs">
+	    <SubType>UserControl</SubType>
+	  </Compile>
 	</ItemGroup>
 	<ItemGroup>
 	  <EmbeddedResource Update="Properties\Resources.resx">
