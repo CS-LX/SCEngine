@@ -13,10 +13,11 @@ namespace SCEngine {
         private readonly Dictionary<string, PropertyDescriptor> _propertyDescriptors;
         private readonly Dictionary<string, PropertyDescriptor> _fieldDescriptors;
 
-        public AutoBrowsableTypeDescriptor(ICustomTypeDescriptor parent, Type type) : base(parent) {
+        public readonly object _instance;
+        public AutoBrowsableTypeDescriptor(ICustomTypeDescriptor parent, Type type, object instance) : base(parent) {
             _propertyDescriptors = new Dictionary<string, PropertyDescriptor>();
             _fieldDescriptors = new Dictionary<string, PropertyDescriptor>();
-
+            _instance = instance;
             // 获取类的所有属性
             var properties = type.GetProperties();
 
@@ -118,24 +119,10 @@ namespace SCEngine {
             }
 
             public override object GetValue(object component) {
-                //if (_field.FieldType == typeof(Vector3)) {
-                //    var vector3 = (Vector3)_field.GetValue(component);
-                //    return $"{vector3.X}, {vector3.Y}, {vector3.Z}";
-                //}
                 return _field.GetValue(component);
             }
 
             public override void SetValue(object component, object value) {
-                //if (_field.FieldType == typeof(Vector3)) {
-                //    if (value is string str) {
-                //        var parts = str.Split(',');
-                //        if (parts.Length == 3 && float.TryParse(parts[0], out float x) && float.TryParse(parts[1], out float y) && float.TryParse(parts[2], out float z)) {
-                //            _field.SetValue(component, new Vector3(x, y, z));
-                //            return;
-                //        }
-                //    }
-                //    throw new ArgumentException("Invalid Vector3 format. Use 'X, Y, Z' format.");
-                //}
                 _field.SetValue(component, value);
             }
 
@@ -274,8 +261,14 @@ namespace SCEngine {
                 default:
                     throw new ArgumentException($"Invalid property name: {_propertyName}");
             }
-            // 将更新后的 Vector3 对象的值设置回原始对象
-            context.PropertyDescriptor.SetValue(context, vector);
+
+            // 获取对应的属性描述符
+            var propertyDescriptor = context.PropertyDescriptor;
+            var propertyInstance = context.Instance;
+            if (propertyDescriptor != null && propertyInstance is AutoBrowsableTypeDescriptor descriptor) {
+                // 将新的 Vector3 值设置到属性描述符所属的类实例中
+                propertyDescriptor.SetValue(descriptor._instance, vector);
+            }
         }
 
         public override void ResetValue(object component) {
