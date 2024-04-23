@@ -31,6 +31,8 @@ namespace SCEngine {
             splitContainer1 = new SplitContainer();
             darkSectionPanel1 = new DarkUI.Controls.DarkSectionPanel();
             propertriesGrid = new PropertyGrid();
+            searchKeyBox = new DarkUI.Controls.DarkTextBox();
+            searchButton = new DarkUI.Controls.DarkButton();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
             splitContainer1.Panel1.SuspendLayout();
             splitContainer1.Panel2.SuspendLayout();
@@ -45,12 +47,12 @@ namespace SCEngine {
             // 
             // subsystemsView
             // 
-            subsystemsView.Dock = DockStyle.Fill;
-            subsystemsView.Location = new Point(0, 0);
+            subsystemsView.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            subsystemsView.Location = new Point(0, 36);
             subsystemsView.MaxDragChange = 50;
             subsystemsView.Name = "subsystemsView";
             subsystemsView.ShowIcons = true;
-            subsystemsView.Size = new Size(463, 499);
+            subsystemsView.Size = new Size(463, 463);
             subsystemsView.TabIndex = 0;
             subsystemsView.Text = "darkTreeView1";
             subsystemsView.SelectedNodesChanged += entitiesView_SelectedNodesChanged;
@@ -87,6 +89,8 @@ namespace SCEngine {
             // 
             // splitContainer1.Panel1
             // 
+            splitContainer1.Panel1.Controls.Add(searchButton);
+            splitContainer1.Panel1.Controls.Add(searchKeyBox);
             splitContainer1.Panel1.Controls.Add(subsystemsView);
             // 
             // splitContainer1.Panel2
@@ -128,6 +132,28 @@ namespace SCEngine {
             propertriesGrid.ViewBorderColor = Color.FromArgb(51, 51, 51);
             propertriesGrid.ViewForeColor = Color.Gainsboro;
             // 
+            // searchKeyBox
+            // 
+            searchKeyBox.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            searchKeyBox.BackColor = Color.FromArgb(69, 73, 74);
+            searchKeyBox.BorderStyle = BorderStyle.FixedSingle;
+            searchKeyBox.ForeColor = Color.FromArgb(220, 220, 220);
+            searchKeyBox.Location = new Point(3, 3);
+            searchKeyBox.Name = "searchKeyBox";
+            searchKeyBox.Size = new Size(382, 27);
+            searchKeyBox.TabIndex = 1;
+            // 
+            // searchButton
+            // 
+            searchButton.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            searchButton.Location = new Point(391, 3);
+            searchButton.Name = "searchButton";
+            searchButton.Padding = new Padding(5);
+            searchButton.Size = new Size(69, 27);
+            searchButton.TabIndex = 2;
+            searchButton.Text = "搜索";
+            searchButton.Click += searchButton_Click;
+            // 
             // WorldSubsystemsWindow
             // 
             AutoScaleDimensions = new SizeF(9F, 20F);
@@ -141,6 +167,7 @@ namespace SCEngine {
             Size = new Size(924, 565);
             Load += WorldSubsystemsWindow_Load;
             splitContainer1.Panel1.ResumeLayout(false);
+            splitContainer1.Panel1.PerformLayout();
             splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)splitContainer1).EndInit();
             splitContainer1.ResumeLayout(false);
@@ -157,5 +184,7 @@ namespace SCEngine {
         private SplitContainer splitContainer1;
         private PropertyGrid propertriesGrid;
         private DarkUI.Controls.DarkSectionPanel darkSectionPanel1;
+        private DarkUI.Controls.DarkTextBox searchKeyBox;
+        private DarkUI.Controls.DarkButton searchButton;
     }
 }

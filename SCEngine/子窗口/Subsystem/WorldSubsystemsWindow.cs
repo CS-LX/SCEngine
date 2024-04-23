@@ -78,5 +78,23 @@ namespace SCEngine {
                 propertriesGrid.SelectedObject = typeDescriptor;
             }
         }
+
+        private void searchButton_Click(object sender, EventArgs e) {//搜索功能
+            DarkTreeNode? perviousSelectedNode = subsystemsView.SelectedNodes.FirstOrDefault() ?? null;
+            List<DarkTreeNode> tempNodes = new List<DarkTreeNode>(subsystemsView.Nodes);
+            subsystemsView.Nodes.Clear();
+            List<DarkTreeNode> searchedNodes = new List<DarkTreeNode>();
+            List<DarkTreeNode> lastNodes = new List<DarkTreeNode>();
+            foreach (var node in tempNodes) {
+                if (UIUtils.FuzzyMatch(node.Text, searchKeyBox.Text)) {
+                    searchedNodes.Add(node);
+                    continue;
+                }
+                lastNodes.Add(node);
+            }
+            subsystemsView.Nodes.AddRange(searchedNodes);
+            subsystemsView.Nodes.AddRange(lastNodes);
+            if (perviousSelectedNode != null) subsystemsView.SelectNode(perviousSelectedNode);
+        }
     }
 }
