@@ -15,6 +15,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Engine", "survivalcraft-api
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NAudio.Flac", "survivalcraft-api\Engine\reference\NAudio.Flac\NAudio.Flac\NAudio.Flac.csproj", "{01F5051F-28C9-4FB7-8207-6D9EFF4C07D1}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Controls", "Controls", "{39230B1C-A1F3-44E7-B0FC-A5D0A3153D99}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "href.Controls", "href.controls\href.Controls.csproj", "{D8041984-1823-4672-9B6E-3E99AB6A3A7A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +45,10 @@ Global
 		{01F5051F-28C9-4FB7-8207-6D9EFF4C07D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{01F5051F-28C9-4FB7-8207-6D9EFF4C07D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{01F5051F-28C9-4FB7-8207-6D9EFF4C07D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8041984-1823-4672-9B6E-3E99AB6A3A7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8041984-1823-4672-9B6E-3E99AB6A3A7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8041984-1823-4672-9B6E-3E99AB6A3A7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8041984-1823-4672-9B6E-3E99AB6A3A7A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -50,6 +58,7 @@ Global
 		{240E1F0D-2ACC-4FDE-8A08-70956CA2156B} = {890079F9-EDB0-4A35-BAB1-CF983428C759}
 		{2E0C1AB2-04D7-4D6B-875B-E3CC8BD8ECBE} = {890079F9-EDB0-4A35-BAB1-CF983428C759}
 		{01F5051F-28C9-4FB7-8207-6D9EFF4C07D1} = {890079F9-EDB0-4A35-BAB1-CF983428C759}
+		{D8041984-1823-4672-9B6E-3E99AB6A3A7A} = {39230B1C-A1F3-44E7-B0FC-A5D0A3153D99}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AD0F86CB-D266-4856-A4E7-D44E77BD68BC}

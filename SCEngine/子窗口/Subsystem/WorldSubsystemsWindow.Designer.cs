@@ -1,3 +1,5 @@
+using href.Controls.PropGridEx;
+
 namespace SCEngine {
     partial class WorldSubsystemsWindow {
         /// <summary>
@@ -30,7 +32,7 @@ namespace SCEngine {
             autoUpdateChechBox = new DarkUI.Controls.DarkCheckBox();
             splitContainer1 = new SplitContainer();
             darkSectionPanel1 = new DarkUI.Controls.DarkSectionPanel();
-            propertriesGrid = new PropertyGrid();
+            propertriesGrid = new PropertyGridEx();
             searchKeyBox = new DarkUI.Controls.DarkTextBox();
             searchButton = new DarkUI.Controls.DarkButton();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
@@ -182,7 +184,7 @@ namespace SCEngine {
         private DarkUI.Controls.DarkButton updateButton;
         private DarkUI.Controls.DarkCheckBox autoUpdateChechBox;
         private SplitContainer splitContainer1;
-        private PropertyGrid propertriesGrid;
+        private PropertyGridEx propertriesGrid;
         private DarkUI.Controls.DarkSectionPanel darkSectionPanel1;
         private DarkUI.Controls.DarkTextBox searchKeyBox;
         private DarkUI.Controls.DarkButton searchButton;

@@ -29,6 +29,7 @@
 		<PackageReference Include="DarkUI.Net5.0" Version="1.0.0" />
 	</ItemGroup>
 	<ItemGroup>
+		<ProjectReference Include="..\href.controls\href.Controls.csproj" />
 		<ProjectReference Include="..\survivalcraft-api\Engine\Engine.csproj" />
 		<ProjectReference Include="..\survivalcraft-api\EntitySystem\EntitySystem.csproj" />
 		<ProjectReference Include="..\survivalcraft-api\Survivalcraft\Survivalcraft.csproj" />

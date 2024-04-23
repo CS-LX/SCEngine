@@ -1,3 +1,5 @@
+using href.Controls.PropGridEx;
+
 namespace SCEngine {
     partial class WorldEnititesWindow {
         /// <summary>
@@ -30,7 +32,7 @@ namespace SCEngine {
             autoUpdateChechBox = new DarkUI.Controls.DarkCheckBox();
             splitContainer1 = new SplitContainer();
             darkSectionPanel1 = new DarkUI.Controls.DarkSectionPanel();
-            propertriesGrid = new PropertyGrid();
+            propertriesGrid = new PropertyGridEx();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
             splitContainer1.Panel1.SuspendLayout();
             splitContainer1.Panel2.SuspendLayout();
@@ -155,7 +157,7 @@ namespace SCEngine {
         private DarkUI.Controls.DarkButton updateButton;
         private DarkUI.Controls.DarkCheckBox autoUpdateChechBox;
         private SplitContainer splitContainer1;
-        private PropertyGrid propertriesGrid;
+        private PropertyGridEx propertriesGrid;
         private DarkUI.Controls.DarkSectionPanel darkSectionPanel1;
     }
 }
