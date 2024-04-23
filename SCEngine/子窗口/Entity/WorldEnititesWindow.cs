@@ -36,14 +36,14 @@ namespace SCEngine {
                         DarkTreeNode enitiyNode = new DarkTreeNode();
                         enitiyNode.Tag = entity;
                         string entitySummary = TryGetSummary(entity);
-                        enitiyNode.Text = entitySummary;
+                        enitiyNode.Text = entitySummary + $"  ({entity.GetType().Namespace})";
                         entitiesView.Nodes.Add(enitiyNode);
 
                         //组件
                         foreach (Component component in entity.Components) {
                             DarkTreeNode componentNode = new DarkTreeNode();
                             componentNode.Tag = component;
-                            componentNode.Text = component.GetType().ToString();
+                            componentNode.Text = component.GetType().Name + $"  ({component.GetType().Namespace})";
                             enitiyNode.Nodes.Add(componentNode);
                         }
                     }

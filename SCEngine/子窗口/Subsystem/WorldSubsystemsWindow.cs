@@ -35,7 +35,7 @@ namespace SCEngine {
                     if (!hasContains) {
                         DarkTreeNode subsystemNode = new DarkTreeNode();
                         subsystemNode.Tag = subsystem;
-                        subsystemNode.Text = subsystem.GetType().Name;
+                        subsystemNode.Text = subsystem.GetType().Name + $"  ({subsystem.GetType().Namespace})";
                         subsystemsView.Nodes.Add(subsystemNode);
                     }
 
