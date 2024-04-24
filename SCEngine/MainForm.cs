@@ -6,11 +6,13 @@ namespace SCEngine;
 public partial class MainForm : DarkForm {
     public WorldEnititesWindow EntitiesForm;
     public WorldSubsystemsWindow SubsystemsForm;
+    public StaticClassesWindow StaticClassesForm;
 
     public MainForm() {
         InitializeComponent();
         EntitiesForm = new WorldEnititesWindow();
         SubsystemsForm = new WorldSubsystemsWindow();
+        StaticClassesForm = new StaticClassesWindow();
         Application.AddMessageFilter(WorkingPanel.DockContentDragFilter);
         Application.AddMessageFilter(WorkingPanel.DockResizeFilter);
     }
@@ -18,6 +20,7 @@ public partial class MainForm : DarkForm {
     private void WorkingPanel_Load(object sender, EventArgs e) {
         WorkingPanel.AddContent(EntitiesForm);
         WorkingPanel.AddContent(SubsystemsForm);
+        WorkingPanel.AddContent(StaticClassesForm);
     }
 
     private void MainForm_FormClosed(object sender, FormClosedEventArgs e) {
