@@ -1,3 +1,6 @@
 [submodule "survivalcraft-api"]
 	path = survivalcraft-api
 	url = git@gitee.com:THPRC/survivalcraft-api.git
+[submodule "DarkUI-Extend"]
+	path = DarkUI-Extend
+	url = https://github.com/CS-LX/DarkUI-Extend.git

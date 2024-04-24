@@ -26,9 +26,7 @@
 	  </COMReference>
 	</ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="DarkUI.Net5.0" Version="1.0.0" />
-	</ItemGroup>
-	<ItemGroup>
+		<ProjectReference Include="..\DarkUI-Extend\DarkUI\DarkUI.csproj" />
 		<ProjectReference Include="..\href.controls\href.Controls.csproj" />
 		<ProjectReference Include="..\survivalcraft-api\Engine\Engine.csproj" />
 		<ProjectReference Include="..\survivalcraft-api\EntitySystem\EntitySystem.csproj" />
@@ -40,12 +38,8 @@
 	    <AutoGen>True</AutoGen>
 	    <DependentUpon>Resources.resx</DependentUpon>
 	  </Compile>
-	  <Compile Update="子窗口\InspectorWindow.cs">
-	    <SubType>UserControl</SubType>
-	  </Compile>
-	  <Compile Update="子窗口\Subsystem\WorldSubsystemsWindow.cs">
-	    <SubType>UserControl</SubType>
-	  </Compile>
+	  <Compile Update="子窗口\InspectorWindow.cs" />
+	  <Compile Update="子窗口\Subsystem\WorldSubsystemsWindow.cs" />
 	</ItemGroup>
 	<ItemGroup>
 	  <EmbeddedResource Update="Properties\Resources.resx">
