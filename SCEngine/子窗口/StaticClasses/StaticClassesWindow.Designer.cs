@@ -111,6 +111,7 @@ namespace SCEngine {
             propertriesGrid.DisabledItemForeColor = Color.FromArgb(127, 122, 128, 132);
             propertriesGrid.Dock = DockStyle.Fill;
             propertriesGrid.DrawFlat = true;
+            propertriesGrid.EnableXml = false;
             propertriesGrid.HelpBackColor = Color.FromArgb(60, 63, 65);
             propertriesGrid.HelpBorderColor = Color.FromArgb(51, 51, 51);
             propertriesGrid.HelpForeColor = Color.Gainsboro;
