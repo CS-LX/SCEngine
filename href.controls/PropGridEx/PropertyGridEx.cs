@@ -22,7 +22,8 @@ namespace href.Controls.PropGridEx {
         private ServiceContainer m_PrivateContainer; // if no service provider is provided
         private href.Controls.Hosting.DummySite m_DummySite;
 
-        public bool EnableXml { get; set; } = false;
+        public bool EnableXmlSerializable { get; set; } = false;
+        public bool EnableSerializable { get; set; } = false;
 
         /// <summary>
         /// Default constructor
@@ -151,6 +152,7 @@ namespace href.Controls.PropGridEx {
 
             FieldMemberDescriptor fmd = propDesc as FieldMemberDescriptor;
             if (fmd != null) {
+                if (!EnableSerializable) return;
                 // serializable
                 if ((fmd.PropertyType.IsSerializable) && (!fmd.FieldInfo.IsNotSerialized)) {
                     PropertyValueUIItem valItem = new PropertyValueUIItem(Properties.Resources.save16, new PropertyValueUIItemInvokeHandler(SerializablePropUiHandler), "Serialized");
@@ -166,7 +168,7 @@ namespace href.Controls.PropGridEx {
 
             }
             else {
-                if (!EnableXml) return;
+                if (!EnableXmlSerializable) return;
                 // Xml Serializable?
                 if ((context.Instance != null) && (context.Instance.GetType().IsSerializable)) {
                     string xmlAttributeName = null;
