@@ -1,3 +1,4 @@
+using DarkUI.Controls;
 using href.Controls.PropGridEx;
 
 namespace SCEngine {
@@ -27,14 +28,23 @@ namespace SCEngine {
         private void InitializeComponent() {
             components = new System.ComponentModel.Container();
             updateTimer = new System.Windows.Forms.Timer(components);
-            widgetView = new DarkUI.Controls.DarkTreeView();
+            widgetView = new DarkTreeView();
             splitContainer1 = new SplitContainer();
-            darkSectionPanel1 = new DarkUI.Controls.DarkSectionPanel();
+            splitContainer2 = new SplitContainer();
+            darkSectionPanel2 = new DarkSectionPanel();
+            toolBox = new DarkTreeView();
+            addWidgetButton = new DarkButton();
+            darkSectionPanel1 = new DarkSectionPanel();
             propertriesGrid = new PropertyGridEx();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
             splitContainer1.Panel1.SuspendLayout();
             splitContainer1.Panel2.SuspendLayout();
             splitContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)splitContainer2).BeginInit();
+            splitContainer2.Panel1.SuspendLayout();
+            splitContainer2.Panel2.SuspendLayout();
+            splitContainer2.SuspendLayout();
+            darkSectionPanel2.SuspendLayout();
             darkSectionPanel1.SuspendLayout();
             SuspendLayout();
             // 
@@ -46,11 +56,11 @@ namespace SCEngine {
             // widgetView
             // 
             widgetView.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            widgetView.Location = new Point(0, 0);
+            widgetView.Location = new Point(3, 0);
             widgetView.MaxDragChange = 50;
             widgetView.Name = "widgetView";
             widgetView.ShowIcons = true;
-            widgetView.Size = new Size(463, 537);
+            widgetView.Size = new Size(415, 496);
             widgetView.TabIndex = 0;
             widgetView.Text = "darkTreeView1";
             widgetView.SelectedNodesChanged += widgetView_SelectedNodesChanged;
@@ -63,14 +73,63 @@ namespace SCEngine {
             // 
             // splitContainer1.Panel1
             // 
-            splitContainer1.Panel1.Controls.Add(widgetView);
+            splitContainer1.Panel1.Controls.Add(splitContainer2);
             // 
             // splitContainer1.Panel2
             // 
             splitContainer1.Panel2.Controls.Add(darkSectionPanel1);
             splitContainer1.Size = new Size(924, 537);
-            splitContainer1.SplitterDistance = 463;
+            splitContainer1.SplitterDistance = 633;
             splitContainer1.TabIndex = 3;
+            // 
+            // splitContainer2
+            // 
+            splitContainer2.Dock = DockStyle.Fill;
+            splitContainer2.Location = new Point(0, 0);
+            splitContainer2.Name = "splitContainer2";
+            // 
+            // splitContainer2.Panel1
+            // 
+            splitContainer2.Panel1.Controls.Add(darkSectionPanel2);
+            // 
+            // splitContainer2.Panel2
+            // 
+            splitContainer2.Panel2.Controls.Add(addWidgetButton);
+            splitContainer2.Panel2.Controls.Add(widgetView);
+            splitContainer2.Size = new Size(633, 537);
+            splitContainer2.SplitterDistance = 211;
+            splitContainer2.TabIndex = 2;
+            // 
+            // darkSectionPanel2
+            // 
+            darkSectionPanel2.Controls.Add(toolBox);
+            darkSectionPanel2.Dock = DockStyle.Fill;
+            darkSectionPanel2.Location = new Point(0, 0);
+            darkSectionPanel2.Name = "darkSectionPanel2";
+            darkSectionPanel2.SectionHeader = "工具箱";
+            darkSectionPanel2.Size = new Size(211, 537);
+            darkSectionPanel2.TabIndex = 1;
+            // 
+            // toolBox
+            // 
+            toolBox.Dock = DockStyle.Fill;
+            toolBox.Location = new Point(1, 25);
+            toolBox.MaxDragChange = 20;
+            toolBox.Name = "toolBox";
+            toolBox.Size = new Size(209, 511);
+            toolBox.TabIndex = 0;
+            toolBox.DoubleClick += toolBox_DoubleClick;
+            // 
+            // addWidgetButton
+            // 
+            addWidgetButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            addWidgetButton.CenterIcon = Properties.Resources.Add;
+            addWidgetButton.CenterIconScale = 0.45F;
+            addWidgetButton.Location = new Point(3, 502);
+            addWidgetButton.Name = "addWidgetButton";
+            addWidgetButton.Padding = new Padding(5);
+            addWidgetButton.Size = new Size(32, 32);
+            addWidgetButton.TabIndex = 1;
             // 
             // darkSectionPanel1
             // 
@@ -79,7 +138,7 @@ namespace SCEngine {
             darkSectionPanel1.Location = new Point(0, 0);
             darkSectionPanel1.Name = "darkSectionPanel1";
             darkSectionPanel1.SectionHeader = "成员属性";
-            darkSectionPanel1.Size = new Size(457, 537);
+            darkSectionPanel1.Size = new Size(287, 537);
             darkSectionPanel1.TabIndex = 0;
             // 
             // propertriesGrid
@@ -101,7 +160,7 @@ namespace SCEngine {
             propertriesGrid.Name = "propertriesGrid";
             propertriesGrid.SelectedItemWithFocusBackColor = Color.FromArgb(69, 73, 74);
             propertriesGrid.SelectedItemWithFocusForeColor = Color.White;
-            propertriesGrid.Size = new Size(455, 511);
+            propertriesGrid.Size = new Size(285, 511);
             propertriesGrid.TabIndex = 0;
             propertriesGrid.ViewBackColor = Color.FromArgb(60, 63, 65);
             propertriesGrid.ViewBorderColor = Color.FromArgb(51, 51, 51);
@@ -121,6 +180,11 @@ namespace SCEngine {
             splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)splitContainer1).EndInit();
             splitContainer1.ResumeLayout(false);
+            splitContainer2.Panel1.ResumeLayout(false);
+            splitContainer2.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)splitContainer2).EndInit();
+            splitContainer2.ResumeLayout(false);
+            darkSectionPanel2.ResumeLayout(false);
             darkSectionPanel1.ResumeLayout(false);
             ResumeLayout(false);
         }
@@ -131,5 +195,9 @@ namespace SCEngine {
         private SplitContainer splitContainer1;
         private PropertyGridEx propertriesGrid;
         private DarkUI.Controls.DarkSectionPanel darkSectionPanel1;
+        private DarkButton addWidgetButton;
+        private SplitContainer splitContainer2;
+        private DarkTreeView toolBox;
+        private DarkSectionPanel darkSectionPanel2;
     }
 }

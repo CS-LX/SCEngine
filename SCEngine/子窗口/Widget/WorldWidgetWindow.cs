@@ -14,6 +14,7 @@ using System.Globalization;
 using System.Reflection;
 using DarkUI.Forms;
 using GameEntitySystem;
+using Screen = Game.Screen;
 
 namespace SCEngine {
     public partial class WorldWidgetWindow : DarkToolWindow {
@@ -41,7 +42,6 @@ namespace SCEngine {
             //添加界面节点
             DarkTreeNode rootNode = new DarkTreeNode(string.IsNullOrEmpty(currentWidget.Name) ? $"[{currentWidget.GetType().Name}]" : currentWidget.Name, currentWidget.GetType().Name);
             rootNode.Tag = currentWidget;
-            rootNode.Expanded = true;
             UpdateWidgetNodes(currentWidget, rootNode);
             widgetView.Nodes.Add(rootNode);
 
@@ -61,12 +61,41 @@ namespace SCEngine {
             }
         }
 
+        public void UpdateToolBox() {
+            Assembly assembly = Assembly.GetAssembly(typeof(Game.Program));
+
+            var widgetTypes = new List<Type>();
+
+            foreach (var type in assembly.GetTypes()) {
+                if (UIUtils.CanInstantiate(type) &&
+                    (type == typeof(Widget) || type.IsSubclassOf(typeof(Widget))) &&
+                    !type.IsSubclassOf(typeof(Dialog)) &&
+                    type != typeof(Dialog) &&
+                    !type.IsSubclassOf(typeof(Screen)) &&
+                    type != typeof(Screen)
+                    ) {
+                    widgetTypes.Add(type);
+                }
+            }
+
+            foreach (var widgetType in widgetTypes) {
+                DarkTreeNode darkTreeNode = new DarkTreeNode(UIUtils.TrimEnd(widgetType.Name, "Widget"));
+                darkTreeNode.Tag = widgetType;
+                toolBox.Nodes.Add(darkTreeNode);
+            }
+        }
+
         private bool FindPlayer() {//寻找玩家GUI，找到了就返回true
             if (GameManager.Project == null) return false;
             subsystemPlayers = GameManager.Project.FindSubsystem<SubsystemPlayers>();
             if (subsystemPlayers == null) return false;
             componentGui = subsystemPlayers.m_componentPlayers[0].ComponentGui;
             return true;
+        }
+
+        private void AddWidget(ContainerWidget parentWidget, Type type, out Widget newWidget) {
+            newWidget = Activator.CreateInstance(type) as Widget;
+            parentWidget.AddChildren(newWidget);
         }
         #endregion
 
@@ -76,6 +105,7 @@ namespace SCEngine {
         }
         private void WorldWidgetWindow_Load(object sender, EventArgs e) {
             updateTimer.Enabled = true;
+            UpdateToolBox();
         }
         private void widgetView_SelectedNodesChanged(object sender, EventArgs e) {
             propertriesGrid.SelectedObject = null;
@@ -85,6 +115,26 @@ namespace SCEngine {
                 var typeDescriptor = new AutoBrowsableTypeDescriptor(TypeDescriptor.GetProvider(selectedObject).GetTypeDescriptor(selectedObject), selectedObject.GetType(), selectedObject);
 
                 propertriesGrid.SelectedObject = typeDescriptor;
+            }
+        }
+        private void toolBox_DoubleClick(object sender, EventArgs e) {
+            object? selectedWidget = toolBox.SelectedNodes.FirstOrDefault()?.Tag ?? null;
+            if (selectedWidget != null && selectedWidget is Type selectedWidgetType) {
+                object? selectedObject = widgetView.SelectedNodes.FirstOrDefault()?.Tag ?? null;
+                if (selectedObject != null) {
+                    if (selectedObject is ContainerWidget containerWidget) {
+                        //添加控件
+                        AddWidget(containerWidget, selectedWidgetType, out Widget newWidget);
+                        //添加节点
+                        DarkTreeNode newNode = new DarkTreeNode(string.IsNullOrEmpty(newWidget.Name) ? $"[{newWidget.GetType().Name}]" : newWidget.Name, newWidget.GetType().Name);
+                        newNode.Tag = newWidget;
+                        widgetView.SelectedNodes.FirstOrDefault()?.Nodes.Add(newNode);
+                    }
+                    else {
+                        DarkMessageBox.ShowWarning($"无法添加子控件，因为{selectedObject}不是容器！", "无法操作");
+                        return;
+                    }
+                }
             }
         }
         #endregion
