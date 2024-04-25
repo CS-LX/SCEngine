@@ -28,6 +28,7 @@ namespace SCEngine {
         private void InitializeComponent() {
             staticClassesView = new DarkListView();
             splitContainer1 = new SplitContainer();
+            assembliesList = new DarkDropdownList();
             searchButton = new DarkButton();
             searchKeyBox = new DarkTextBox();
             darkSectionPanel1 = new DarkSectionPanel();
@@ -42,11 +43,11 @@ namespace SCEngine {
             // staticClassesView
             // 
             staticClassesView.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            staticClassesView.Location = new Point(0, 36);
+            staticClassesView.Location = new Point(0, 69);
             staticClassesView.MaxDragChange = 50;
             staticClassesView.Name = "staticClassesView";
             staticClassesView.ShowIcons = true;
-            staticClassesView.Size = new Size(463, 504);
+            staticClassesView.Size = new Size(462, 471);
             staticClassesView.TabIndex = 0;
             staticClassesView.Text = "darkTreeView1";
             staticClassesView.SelectedIndicesChanged += staticClassesView_SelectedIndicesChanged;
@@ -59,6 +60,7 @@ namespace SCEngine {
             // 
             // splitContainer1.Panel1
             // 
+            splitContainer1.Panel1.Controls.Add(assembliesList);
             splitContainer1.Panel1.Controls.Add(searchButton);
             splitContainer1.Panel1.Controls.Add(searchKeyBox);
             splitContainer1.Panel1.Controls.Add(staticClassesView);
@@ -69,6 +71,18 @@ namespace SCEngine {
             splitContainer1.Size = new Size(924, 540);
             splitContainer1.SplitterDistance = 463;
             splitContainer1.TabIndex = 3;
+            // 
+            // assembliesList
+            // 
+            assembliesList.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            assembliesList.BackColor = Color.FromArgb(69, 73, 74);
+            assembliesList.ForeColor = Color.FromArgb(220, 220, 220);
+            assembliesList.Location = new Point(3, 36);
+            assembliesList.Name = "assembliesList";
+            assembliesList.Size = new Size(457, 27);
+            assembliesList.TabIndex = 3;
+            assembliesList.SelectedItemChanged += assembliesList_SelectedItemChanged;
+            assembliesList.Click += assembliesList_Click;
             // 
             // searchButton
             // 
@@ -111,6 +125,7 @@ namespace SCEngine {
             propertriesGrid.DisabledItemForeColor = Color.FromArgb(127, 122, 128, 132);
             propertriesGrid.Dock = DockStyle.Fill;
             propertriesGrid.DrawFlat = true;
+            propertriesGrid.EnableSerializable = false;
             propertriesGrid.EnableXmlSerializable = false;
             propertriesGrid.HelpBackColor = Color.FromArgb(60, 63, 65);
             propertriesGrid.HelpBorderColor = Color.FromArgb(51, 51, 51);
@@ -152,5 +167,6 @@ namespace SCEngine {
         private DarkUI.Controls.DarkSectionPanel darkSectionPanel1;
         private DarkUI.Controls.DarkTextBox searchKeyBox;
         private DarkUI.Controls.DarkButton searchButton;
+        private DarkDropdownList assembliesList;
     }
 }

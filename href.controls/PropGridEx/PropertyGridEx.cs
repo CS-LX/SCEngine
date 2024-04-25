@@ -41,6 +41,7 @@ namespace href.Controls.PropGridEx {
             : base() {
             this.DrawFlat = true;
             // add the RawPage now and for ever (static)
+            // 添加新tab的方法
             this.PropertyTabs.AddTabType(typeof(RawMemberTab), PropertyTabScope.Static);
 
             this.SetServiceProvider(serviceProvider);
