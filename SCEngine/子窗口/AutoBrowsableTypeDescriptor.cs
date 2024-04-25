@@ -29,6 +29,9 @@ namespace SCEngine {
                 else if (prop.PropertyType == typeof(Quaternion)) {
                     _propertyDescriptors[prop.Name] = new PropertyPropertyDescriptor(prop, new Attribute[] { new TypeConverterAttribute(typeof(QuaternionTypeConverter)) });
                 }
+                else if (prop.PropertyType == typeof(Vector2)) {
+                    _propertyDescriptors[prop.Name] = new PropertyPropertyDescriptor(prop, new Attribute[] { new TypeConverterAttribute(typeof(Vector2TypeConverter)) });
+                }
                 else {
                     _propertyDescriptors[prop.Name] = new PropertyPropertyDescriptor(prop);
                 }
@@ -44,6 +47,9 @@ namespace SCEngine {
                 }
                 else if (field.FieldType == typeof(Quaternion)) {
                     _fieldDescriptors[field.Name] = new FieldPropertyDescriptor(field, new Attribute[] { new TypeConverterAttribute(typeof(QuaternionTypeConverter)) });
+                }
+                else if (field.FieldType == typeof(Vector2)) {
+                    _fieldDescriptors[field.Name] = new FieldPropertyDescriptor(field, new Attribute[] { new TypeConverterAttribute(typeof(Vector2TypeConverter)) });
                 }
                 else {
                     _fieldDescriptors[field.Name] = new FieldPropertyDescriptor(field);
@@ -86,6 +92,9 @@ namespace SCEngine {
                     else if (_property.PropertyType == typeof(Quaternion)) {
                         return typeof(string); // 使用自定义的 TypeConverter 显示为字符串
                     }
+                    else if (_property.PropertyType == typeof(Vector2)) {
+                        return typeof(string); // 使用自定义的 TypeConverter 显示为字符串
+                    }
                     return _property.PropertyType;
                 }
             }
@@ -100,7 +109,7 @@ namespace SCEngine {
 
             // 其他方法保持不变
             public override bool CanResetValue(object component) => false;
-            public override void ResetValue(object component) => _property.SetValue(component, Vector3.Zero);
+            public override void ResetValue(object component) { }
             public override bool ShouldSerializeValue(object component) => false;
             public override bool IsReadOnly => false;
             public override Type ComponentType => _property.DeclaringType;
@@ -126,6 +135,9 @@ namespace SCEngine {
                     else if (_field.FieldType == typeof(Quaternion)) {
                         return typeof(string); // 使用自定义的 TypeConverter 显示为字符串
                     }
+                    else if (_field.FieldType == typeof(Vector2)) {
+                        return typeof(string); // 使用自定义的 TypeConverter 显示为字符串
+                    }
                     return _field.FieldType;
                 }
             }
@@ -140,7 +152,7 @@ namespace SCEngine {
 
             // 其他方法保持不变
             public override bool CanResetValue(object component) => false;
-            public override void ResetValue(object component) => _field.SetValue(component, Vector3.Zero);
+            public override void ResetValue(object component) { }
             public override bool ShouldSerializeValue(object component) => false;
             public override bool IsReadOnly => false;
             public override Type ComponentType => _field.DeclaringType;
@@ -405,6 +417,116 @@ namespace SCEngine {
             if (propertyDescriptor != null && propertyInstance is AutoBrowsableTypeDescriptor descriptor) {
                 // 将新的 Vector3 值设置到属性描述符所属的类实例中
                 propertyDescriptor.SetValue(descriptor._instance, quaternion);
+            }
+        }
+
+        public override void ResetValue(object component) {
+            // Not implemented
+        }
+
+        public override bool ShouldSerializeValue(object component) {
+            // Not implemented
+            return false;
+        }
+    }
+
+    public class Vector2TypeConverter : ExpandableObjectConverter {
+        public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType) {
+            if (sourceType == typeof(string)) {
+                return true;
+            }
+            return base.CanConvertFrom(context, sourceType);
+        }
+
+        public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value) {
+            if (value is string strValue) {
+                try {
+                    string[] parts = strValue.Split(',');
+                    if (parts.Length == 2 &&
+                        float.TryParse(parts[0], out float x) &&
+                        float.TryParse(parts[1], out float y)) {
+                        return new Vector2(x, y);
+                    }
+                }
+                catch (Exception) {
+                    throw new ArgumentException("Invalid Vector3 format. Please use format 'X, Y, Z'.");
+                }
+            }
+            return base.ConvertFrom(context, culture, value);
+        }
+
+        public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType) {
+            if (destinationType == typeof(string) && value is Vector2 vector2) {
+                return $"{vector2.X}, {vector2.Y}";
+            }
+            return base.ConvertTo(context, culture, value, destinationType);
+        }
+
+        public override PropertyDescriptorCollection GetProperties(ITypeDescriptorContext context, object value, Attribute[] attributes) {
+            PropertyDescriptorCollection baseProps = base.GetProperties(context, value, attributes);
+            PropertyDescriptor[] props = new PropertyDescriptor[2];
+            props[0] = new Vector2PropertyDescriptor("X", typeof(float), context);
+            props[1] = new Vector2PropertyDescriptor("Y", typeof(float), context);
+            return new PropertyDescriptorCollection(props);
+        }
+
+        public override bool GetPropertiesSupported(ITypeDescriptorContext context) {
+            return true;
+        }
+    }
+
+    public class Vector2PropertyDescriptor : PropertyDescriptor {
+        private readonly string _propertyName;
+        private readonly Type _propertyType;
+        private readonly ITypeDescriptorContext context;
+
+        public Vector2PropertyDescriptor(string propertyName, Type propertyType, ITypeDescriptorContext context)
+            : base(propertyName, null) {
+            _propertyName = propertyName;
+            _propertyType = propertyType;
+            this.context = context;
+        }
+
+        public override Type ComponentType => typeof(Vector2);
+
+        public override bool IsReadOnly => false;
+
+        public override Type PropertyType => _propertyType;
+
+        public override bool CanResetValue(object component) => false;
+
+        public override object GetValue(object component) {
+            Vector2 vector = (Vector2)component;
+            switch (_propertyName) {
+                case "X":
+                    return vector.X;
+                case "Y":
+                    return vector.Y;
+                default:
+                    throw new ArgumentException($"Invalid property name: {_propertyName}");
+            }
+        }
+
+        public override void SetValue(object component, object value) {
+            Vector2 vector = (Vector2)component;
+            float floatValue = Convert.ToSingle(value);
+            switch (_propertyName) {
+                case "X":
+                    vector = new Vector2(floatValue, vector.Y);
+                    break;
+                case "Y":
+                    vector = new Vector2(vector.X, floatValue);
+                    break;
+                default:
+                    throw new ArgumentException($"Invalid property name: {_propertyName}");
+            }
+
+            // 获取对应的属性描述符
+            var propertyDescriptor = context.PropertyDescriptor;
+            var propertyInstance = context.Instance;
+            if (propertyDescriptor != null && propertyInstance is AutoBrowsableTypeDescriptor descriptor) {
+                // 将新的 Vector3 值设置到属性描述符所属的类实例中
+                propertyDescriptor.SetValue(descriptor._instance, vector);
             }
         }
 
