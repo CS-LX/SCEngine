@@ -39,7 +39,7 @@ namespace SCEngine {
             if (currentWidget == null) return;
 
             //添加界面节点
-            DarkTreeNode rootNode = new DarkTreeNode(string.IsNullOrEmpty(currentWidget.Name) ? currentWidget.GetType().Name : currentWidget.Name, currentWidget.GetType().Name);
+            DarkTreeNode rootNode = new DarkTreeNode(string.IsNullOrEmpty(currentWidget.Name) ? $"[{currentWidget.GetType().Name}]" : currentWidget.Name, currentWidget.GetType().Name);
             rootNode.Tag = currentWidget;
             rootNode.Expanded = true;
             UpdateWidgetNodes(currentWidget, rootNode);
@@ -51,7 +51,7 @@ namespace SCEngine {
             if (widget == null || parentNode == null) return;
 
             foreach (Widget childWidget in widget.Children) {
-                DarkTreeNode node = new DarkTreeNode(string.IsNullOrEmpty(childWidget.Name) ? childWidget.GetType().Name : childWidget.Name, childWidget.GetType().Name);
+                DarkTreeNode node = new DarkTreeNode(string.IsNullOrEmpty(childWidget.Name) ? $"[{childWidget.GetType().Name}]" : childWidget.Name, childWidget.GetType().Name);
                 node.Tag = childWidget;
                 parentNode.Nodes.Add(node);
 
