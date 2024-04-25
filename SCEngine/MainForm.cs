@@ -7,12 +7,14 @@ public partial class MainForm : DarkForm {
     public WorldEnititesWindow EntitiesForm;
     public WorldSubsystemsWindow SubsystemsForm;
     public StaticClassesWindow StaticClassesForm;
+    public WorldWidgetWindow WorldWidgetWindow;
 
     public MainForm() {
         InitializeComponent();
         EntitiesForm = new WorldEnititesWindow();
         SubsystemsForm = new WorldSubsystemsWindow();
         StaticClassesForm = new StaticClassesWindow();
+        WorldWidgetWindow = new WorldWidgetWindow();
         Application.AddMessageFilter(WorkingPanel.DockContentDragFilter);
         Application.AddMessageFilter(WorkingPanel.DockResizeFilter);
     }
@@ -21,6 +23,7 @@ public partial class MainForm : DarkForm {
         WorkingPanel.AddContent(EntitiesForm);
         WorkingPanel.AddContent(SubsystemsForm);
         WorkingPanel.AddContent(StaticClassesForm);
+        WorkingPanel.AddContent(WorldWidgetWindow);
     }
 
     private void MainForm_FormClosed(object sender, FormClosedEventArgs e) {

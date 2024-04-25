@@ -43,6 +43,9 @@
 	    <SubType>UserControl</SubType>
 	  </Compile>
 	  <Compile Update="子窗口\Subsystem\WorldSubsystemsWindow.cs" />
+	  <Compile Update="子窗口\Widget\WorldWidgetWindow.cs">
+	    <SubType>UserControl</SubType>
+	  </Compile>
 	</ItemGroup>
 	<ItemGroup>
 	  <EmbeddedResource Update="Properties\Resources.resx">
