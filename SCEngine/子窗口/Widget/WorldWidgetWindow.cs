@@ -137,6 +137,20 @@ namespace SCEngine {
                 }
             }
         }
+        private void removeWidgetButton_Click(object sender, EventArgs e) {
+            object? selectedObject = widgetView.SelectedNodes.FirstOrDefault()?.Tag ?? null;
+            if (selectedObject != null && selectedObject is Widget selectedWidget) {
+                DarkTreeNode selectedNode = widgetView.SelectedNodes.FirstOrDefault();
+                if (!selectedNode.IsRoot) {
+                    selectedNode.ParentNode.Nodes.Remove(selectedNode);//删除节点
+                    selectedWidget.ParentWidget.Children.Remove(selectedWidget);//删除界面
+                }
+                else {
+                    DarkMessageBox.ShowWarning($"无法删除根控件", "无法操作");
+                    return;
+                }
+            }
+        }
         #endregion
     }
 }

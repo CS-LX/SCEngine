@@ -33,7 +33,7 @@ namespace SCEngine {
             splitContainer2 = new SplitContainer();
             darkSectionPanel2 = new DarkSectionPanel();
             toolBox = new DarkTreeView();
-            addWidgetButton = new DarkButton();
+            removeWidgetButton = new DarkButton();
             darkSectionPanel1 = new DarkSectionPanel();
             propertriesGrid = new PropertyGridEx();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
@@ -94,7 +94,7 @@ namespace SCEngine {
             // 
             // splitContainer2.Panel2
             // 
-            splitContainer2.Panel2.Controls.Add(addWidgetButton);
+            splitContainer2.Panel2.Controls.Add(removeWidgetButton);
             splitContainer2.Panel2.Controls.Add(widgetView);
             splitContainer2.Size = new Size(633, 537);
             splitContainer2.SplitterDistance = 211;
@@ -120,16 +120,17 @@ namespace SCEngine {
             toolBox.TabIndex = 0;
             toolBox.DoubleClick += toolBox_DoubleClick;
             // 
-            // addWidgetButton
+            // removeWidgetButton
             // 
-            addWidgetButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            addWidgetButton.CenterIcon = Properties.Resources.Add;
-            addWidgetButton.CenterIconScale = 0.45F;
-            addWidgetButton.Location = new Point(3, 502);
-            addWidgetButton.Name = "addWidgetButton";
-            addWidgetButton.Padding = new Padding(5);
-            addWidgetButton.Size = new Size(32, 32);
-            addWidgetButton.TabIndex = 1;
+            removeWidgetButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            removeWidgetButton.CenterIcon = Properties.Resources.Bin;
+            removeWidgetButton.CenterIconScale = 0.32F;
+            removeWidgetButton.Location = new Point(3, 502);
+            removeWidgetButton.Name = "removeWidgetButton";
+            removeWidgetButton.Padding = new Padding(5);
+            removeWidgetButton.Size = new Size(32, 32);
+            removeWidgetButton.TabIndex = 1;
+            removeWidgetButton.Click += removeWidgetButton_Click;
             // 
             // darkSectionPanel1
             // 
@@ -195,7 +196,7 @@ namespace SCEngine {
         private SplitContainer splitContainer1;
         private PropertyGridEx propertriesGrid;
         private DarkUI.Controls.DarkSectionPanel darkSectionPanel1;
-        private DarkButton addWidgetButton;
+        private DarkButton removeWidgetButton;
         private SplitContainer splitContainer2;
         private DarkTreeView toolBox;
         private DarkSectionPanel darkSectionPanel2;
