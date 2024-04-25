@@ -71,7 +71,7 @@ namespace SCEngine {
             return GetProperties();
         }
 
-        private class PropertyPropertyDescriptor : PropertyDescriptor {
+        public class PropertyPropertyDescriptor : PropertyDescriptor {
             private readonly PropertyInfo _property;
 
             public PropertyPropertyDescriptor(PropertyInfo property) : base(property.Name, null) {
@@ -111,7 +111,7 @@ namespace SCEngine {
             }
         }
 
-        private class FieldPropertyDescriptor : PropertyDescriptor {
+        public class FieldPropertyDescriptor : PropertyDescriptor {
             private readonly FieldInfo _field;
 
             public FieldPropertyDescriptor(FieldInfo field) : base(field.Name, null) {
@@ -151,7 +151,7 @@ namespace SCEngine {
             }
         }
 
-        private class CategoryPropertyDescriptor : PropertyDescriptor {
+        public class CategoryPropertyDescriptor : PropertyDescriptor {
             private readonly PropertyDescriptor _originalDescriptor;
             private readonly string _category;
 
