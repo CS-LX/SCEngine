@@ -89,8 +89,8 @@ namespace SCEngine {
             if (GameManager.Project == null) return false;
             subsystemPlayers = GameManager.Project.FindSubsystem<SubsystemPlayers>();
             if (subsystemPlayers == null) return false;
-            componentGui = subsystemPlayers.m_componentPlayers[0].ComponentGui;
-            return true;
+            componentGui = subsystemPlayers.m_componentPlayers.FirstOrDefault()?.ComponentGui;
+            return componentGui != null;
         }
 
         private void AddWidget(ContainerWidget parentWidget, Type type, out Widget newWidget) {
@@ -118,23 +118,29 @@ namespace SCEngine {
             }
         }
         private void toolBox_DoubleClick(object sender, EventArgs e) {
-            object? selectedWidget = toolBox.SelectedNodes.FirstOrDefault()?.Tag ?? null;
-            if (selectedWidget != null && selectedWidget is Type selectedWidgetType) {
-                object? selectedObject = widgetView.SelectedNodes.FirstOrDefault()?.Tag ?? null;
-                if (selectedObject != null) {
-                    if (selectedObject is ContainerWidget containerWidget) {
-                        //添加控件
-                        AddWidget(containerWidget, selectedWidgetType, out Widget newWidget);
-                        //添加节点
-                        DarkTreeNode newNode = new DarkTreeNode(string.IsNullOrEmpty(newWidget.Name) ? $"[{newWidget.GetType().Name}]" : newWidget.Name, newWidget.GetType().Name);
-                        newNode.Tag = newWidget;
-                        widgetView.SelectedNodes.FirstOrDefault()?.Nodes.Add(newNode);
-                    }
-                    else {
-                        DarkMessageBox.ShowWarning($"无法添加子控件，因为{selectedObject}不是容器！", "无法操作");
-                        return;
+            try {
+                object? selectedWidget = toolBox.SelectedNodes.FirstOrDefault()?.Tag ?? null;
+                if (selectedWidget != null && selectedWidget is Type selectedWidgetType) {
+                    object? selectedObject = widgetView.SelectedNodes.FirstOrDefault()?.Tag ?? null;
+                    if (selectedObject != null) {
+                        if (selectedObject is ContainerWidget containerWidget) {
+                            //添加控件
+                            AddWidget(containerWidget, selectedWidgetType, out Widget newWidget);
+                            //添加节点
+                            DarkTreeNode newNode = new DarkTreeNode(string.IsNullOrEmpty(newWidget.Name) ? $"[{newWidget.GetType().Name}]" : newWidget.Name, newWidget.GetType().Name);
+                            newNode.Tag = newWidget;
+                            widgetView.SelectedNodes.FirstOrDefault()?.Nodes.Add(newNode);
+                        }
+                        else {
+                            DarkMessageBox.ShowWarning($"无法添加子控件，因为{selectedObject}不是容器！", "无法操作");
+                            return;
+                        }
                     }
                 }
+            }
+            catch (Exception ex) {
+                DarkMessageBox.ShowWarning(ex.Message, "错误");
+                return;
             }
         }
         private void removeWidgetButton_Click(object sender, EventArgs e) {
