@@ -95,10 +95,6 @@ namespace SCEngine {
 
         private void assembliesList_Click(object sender, EventArgs e) {
             UpdateAssemblies();
-            DarkDropdownItem index = assembliesList.SelectedItem;
-            if (index != null) {
-                UpdateClasses(Assemblies[index.Tag.ToString()]);
-            }
         }
 
         private void assembliesList_SelectedItemChanged(object sender, EventArgs e) {

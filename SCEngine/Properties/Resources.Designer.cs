@@ -59,5 +59,32 @@ namespace SCEngine.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   查找类似 MemberComponentTemplate==生物组件项
+        ///Parameter==单个参数项
+        ///ParameterSet==多个参数项
+        ///EntityTemplate==实体项
+        ///ComponentTemplate==组件模板项
+        ///
+        ///AccelerationFactor==加速因子，用于摩擦，冰块这种，比较原版玩家女性的因子高点，所以跑的快，可能用于冰面，其它的没试过有待测试
+        ///ActiveSlotIndex==激活的格子位置
+        ///AdjustableDelayGateBlockBehavior==延迟门行为
+        ///AICreature==生物的基本功能。就是生物需要的基本属性、掉落物品，给各种动物的父类继承，快速编辑AI
+        ///AimingSights==瞄准，玩家的瞄准行为，就是射箭、丢石头这种
+        ///Air==空气
+        ///AirCapacity==氧气容量
+        ///AirDrag==空气阻力
+        ///AllowManualWakeUp==
+        ///Alpaca==羊驼父系，老k旧案
+        ///Alpaca_Shorn==被修剪后的羊驼，老k旧案
+        ///Alpaca_White==白色羊驼，老k旧案
+        ///AlwaysEnabled==始终自动跳跃        /// [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        /// </summary>
+        internal static string DatabaseWordsDescription {
+            get {
+                return ResourceManager.GetString("DatabaseWordsDescription", resourceCulture);
+            }
+        }
     }
 }

@@ -15,11 +15,24 @@ using Game;
 using System.Globalization;
 using System.Reflection;
 using DarkUI.Forms;
+using SCEngine.Properties;
 
 namespace SCEngine {
     public partial class WorldEnititesWindow : DarkToolWindow {
         public WorldEnititesWindow() {
             InitializeComponent();
+        }
+
+        #region 字段
+        public Dictionary<string, string> PropertyDescriptions = new();
+        #endregion
+
+        #region 方法
+        public void LoadDescription() {
+            string[] desc = Resources.DatabaseWordsDescription.Split("\r\n", StringSplitOptions.RemoveEmptyEntries);
+            foreach (string item in desc) {
+                PropertyDescriptions.Add(item.Split("==")[0], item.Split("==")[1]);
+            }
         }
 
         public void UpdateEnitites() {//更新实体
@@ -77,9 +90,12 @@ namespace SCEngine {
 
             return "未知实体";
         }
+        #endregion
 
+        #region UI事件
         private void WorldEnititesWindow_Load(object sender, EventArgs e) {
             updateTimer.Enabled = autoUpdateChechBox.Checked;
+            LoadDescription();
         }
 
         private void updateTimer_Tick(object sender, EventArgs e) {
@@ -104,5 +120,6 @@ namespace SCEngine {
                 propertriesGrid.SelectedObject = typeDescriptor;
             }
         }
+        #endregion
     }
 }
