@@ -40,37 +40,6 @@ namespace SCEngine {
             ((System.ComponentModel.ISupportInitialize)AInput).BeginInit();
             SuspendLayout();
             // 
-            // btnOk
-            // 
-            btnOk.Enabled = false;
-            btnOk.Visible = false;
-            // 
-            // btnCancel
-            // 
-            btnCancel.Location = new Point(259, 15);
-            // 
-            // btnClose
-            // 
-            btnClose.Location = new Point(15, 15);
-            // 
-            // btnYes
-            // 
-            btnYes.Location = new Point(15, 15);
-            btnYes.Margin = new Padding(0, 0, 10, 0);
-            // 
-            // btnNo
-            // 
-            btnNo.Location = new Point(15, 15);
-            btnNo.Margin = new Padding(0, 0, 10, 0);
-            // 
-            // btnRetry
-            // 
-            btnRetry.Location = new Point(575, 15);
-            // 
-            // btnIgnore
-            // 
-            btnIgnore.Location = new Point(575, 15);
-            // 
             // RInput
             // 
             RInput.Location = new Point(50, 12);

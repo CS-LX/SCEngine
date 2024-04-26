@@ -11,7 +11,7 @@ using DarkUI.Forms;
 using Color = Engine.Color;
 
 namespace SCEngine {
-    public partial class ColorExDialog : DarkDialog {
+    public partial class ColorExDialog : DarkForm {
         public Color SelectedColor => new((int)RInput.Value, (int)GInput.Value, (int)BInput.Value, (int)AInput.Value);
         private Color _initalColor = Color.Black;
         public Color InitalColor {
