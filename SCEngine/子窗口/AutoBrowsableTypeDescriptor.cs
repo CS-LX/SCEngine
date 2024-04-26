@@ -1,12 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing.Design;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms.Design;
 using Engine;
+using Color = Engine.Color;
 
 namespace SCEngine {
     public class AutoBrowsableTypeDescriptor : CustomTypeDescriptor {
@@ -31,6 +34,9 @@ namespace SCEngine {
                 }
                 else if (prop.PropertyType == typeof(Vector2)) {
                     _propertyDescriptors[prop.Name] = new PropertyPropertyDescriptor(prop, new Attribute[] { new TypeConverterAttribute(typeof(Vector2TypeConverter)) });
+                }
+                else if (prop.PropertyType == typeof(Color)) {
+                    _propertyDescriptors[prop.Name] = new PropertyPropertyDescriptor(prop, new Attribute[] { new EditorAttribute(typeof(ColorExEditor), typeof(UITypeEditor)) });
                 }
                 else {
                     _propertyDescriptors[prop.Name] = new PropertyPropertyDescriptor(prop);
@@ -538,5 +544,64 @@ namespace SCEngine {
             // Not implemented
             return false;
         }
+    }
+
+    public class ColorExEditor : UITypeEditor {
+        private ColorExEditorDialog dialog;
+
+        public ColorExEditor() {
+            dialog = new ColorExEditorDialog();
+            dialog.TopLevel = false;
+        }
+
+
+        public override UITypeEditorEditStyle GetEditStyle(ITypeDescriptorContext context) {
+            return UITypeEditorEditStyle.DropDown;
+        }
+
+        /// <summary>
+        /// 编辑值
+        /// </summary>
+        /// <param name="context">可用于获取附加上下文信息的 ITypeDescriptorContext。</param>
+        /// <param name="provider">一个 IServiceProvider ，此编辑器可用它来获取服务</param>
+        /// <param name="value">要编辑的对象。</param>
+        /// <returns>对象的新值。 如果尚未更改对象的值，则它返回的对象应与传递给它的对象相同。</returns>
+        public override object EditValue(ITypeDescriptorContext context, IServiceProvider provider, object value) {
+            if (context != null && context.Instance != null && provider != null) {
+                IWindowsFormsEditorService service = (IWindowsFormsEditorService)provider.GetService(typeof(IWindowsFormsEditorService));
+                if (service != null) {
+                    Color color = (Color)value;
+                    dialog.DataSource = color;
+                    // 在提供此服务的属性网格的值字段下方的下拉区域中显示指定控件。
+                    service.DropDownControl(dialog);
+                    return dialog.Value;
+                }
+            }
+            return null;
+        }
+    }
+
+    public class ColorExEditorDialog : ColorExDialog {
+        public ColorExEditorDialog() {
+            InitializeComponent();
+        }
+
+        public ColorExEditorDialog(IContainer container) {
+            container.Add(this);
+
+            InitializeComponent();
+        }
+
+        #region 绑定数据源
+
+        public new object DataSource {
+            set {
+                InitalColor = (Color)value;
+            }
+        }
+
+        public Color Value => SelectedColor;
+
+        #endregion
     }
 }
