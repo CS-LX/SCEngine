@@ -27,16 +27,16 @@ namespace SCEngine {
             // 创建属性的 PropertyDescriptor 集合
             foreach (var prop in properties) {
                 if (prop.PropertyType == typeof(Vector3)) {
-                    _propertyDescriptors[prop.Name] = new PropertyPropertyDescriptor(prop, new Attribute[] { new TypeConverterAttribute(typeof(Vector3TypeConverter)) });
+                    _propertyDescriptors[prop.Name] = new PropertyPropertyDescriptor(prop, [new TypeConverterAttribute(typeof(Vector3TypeConverter))]);
                 }
                 else if (prop.PropertyType == typeof(Quaternion)) {
-                    _propertyDescriptors[prop.Name] = new PropertyPropertyDescriptor(prop, new Attribute[] { new TypeConverterAttribute(typeof(QuaternionTypeConverter)) });
+                    _propertyDescriptors[prop.Name] = new PropertyPropertyDescriptor(prop, [new TypeConverterAttribute(typeof(QuaternionTypeConverter))]);
                 }
                 else if (prop.PropertyType == typeof(Vector2)) {
-                    _propertyDescriptors[prop.Name] = new PropertyPropertyDescriptor(prop, new Attribute[] { new TypeConverterAttribute(typeof(Vector2TypeConverter)) });
+                    _propertyDescriptors[prop.Name] = new PropertyPropertyDescriptor(prop, [new TypeConverterAttribute(typeof(Vector2TypeConverter))]);
                 }
                 else if (prop.PropertyType == typeof(Color)) {
-                    _propertyDescriptors[prop.Name] = new PropertyPropertyDescriptor(prop, new Attribute[] { new EditorAttribute(typeof(ColorExEditor), typeof(UITypeEditor)) });
+                    _propertyDescriptors[prop.Name] = new PropertyPropertyDescriptor(prop, [new EditorAttribute(typeof(ColorExEditor), typeof(UITypeEditor))]);
                 }
                 else {
                     _propertyDescriptors[prop.Name] = new PropertyPropertyDescriptor(prop);
@@ -49,13 +49,16 @@ namespace SCEngine {
             // 创建字段的 PropertyDescriptor 集合
             foreach (var field in fields) {
                 if (field.FieldType == typeof(Vector3)) {
-                    _fieldDescriptors[field.Name] = new FieldPropertyDescriptor(field, new Attribute[] { new TypeConverterAttribute(typeof(Vector3TypeConverter)) });
+                    _fieldDescriptors[field.Name] = new FieldPropertyDescriptor(field, [new TypeConverterAttribute(typeof(Vector3TypeConverter))]);
                 }
                 else if (field.FieldType == typeof(Quaternion)) {
-                    _fieldDescriptors[field.Name] = new FieldPropertyDescriptor(field, new Attribute[] { new TypeConverterAttribute(typeof(QuaternionTypeConverter)) });
+                    _fieldDescriptors[field.Name] = new FieldPropertyDescriptor(field, [new TypeConverterAttribute(typeof(QuaternionTypeConverter))]);
                 }
                 else if (field.FieldType == typeof(Vector2)) {
-                    _fieldDescriptors[field.Name] = new FieldPropertyDescriptor(field, new Attribute[] { new TypeConverterAttribute(typeof(Vector2TypeConverter)) });
+                    _fieldDescriptors[field.Name] = new FieldPropertyDescriptor(field, [new TypeConverterAttribute(typeof(Vector2TypeConverter))]);
+                }
+                else if (field.FieldType == typeof(Color)) {
+                    _fieldDescriptors[field.Name] = new FieldPropertyDescriptor(field, [new EditorAttribute(typeof(ColorExEditor), typeof(UITypeEditor))]);
                 }
                 else {
                     _fieldDescriptors[field.Name] = new FieldPropertyDescriptor(field);
