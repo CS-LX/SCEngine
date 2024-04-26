@@ -4,8 +4,11 @@
     <Compile Update="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="子窗口\MatrixDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="子窗口\ColorExDialog.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Update="子窗口\Entity\WorldEnititesWindow.cs">
       <SubType>UserControl</SubType>

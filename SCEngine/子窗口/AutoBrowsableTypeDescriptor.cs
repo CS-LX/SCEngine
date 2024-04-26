@@ -38,6 +38,9 @@ namespace SCEngine {
                 else if (prop.PropertyType == typeof(Color)) {
                     _propertyDescriptors[prop.Name] = new PropertyPropertyDescriptor(prop, [new EditorAttribute(typeof(ColorExEditor), typeof(UITypeEditor))]);
                 }
+                else if (prop.PropertyType == typeof(Matrix)) {
+                    _propertyDescriptors[prop.Name] = new PropertyPropertyDescriptor(prop, [new EditorAttribute(typeof(MatrixEditor), typeof(UITypeEditor))]);
+                }
                 else {
                     _propertyDescriptors[prop.Name] = new PropertyPropertyDescriptor(prop);
                 }
@@ -59,6 +62,9 @@ namespace SCEngine {
                 }
                 else if (field.FieldType == typeof(Color)) {
                     _fieldDescriptors[field.Name] = new FieldPropertyDescriptor(field, [new EditorAttribute(typeof(ColorExEditor), typeof(UITypeEditor))]);
+                }
+                else if (field.FieldType == typeof(Matrix)) {
+                    _fieldDescriptors[field.Name] = new FieldPropertyDescriptor(field, [new EditorAttribute(typeof(MatrixEditor), typeof(UITypeEditor))]);
                 }
                 else {
                     _fieldDescriptors[field.Name] = new FieldPropertyDescriptor(field);
@@ -605,6 +611,64 @@ namespace SCEngine {
 
         public Color Value => SelectedColor;
 
+        #endregion
+    }
+
+    public class MatrixEditor : UITypeEditor {
+        private MatrixEditorDialog dialog;
+
+        public MatrixEditor() {
+            dialog = new MatrixEditorDialog();
+            dialog.TopLevel = false;
+        }
+
+
+        public override UITypeEditorEditStyle GetEditStyle(ITypeDescriptorContext context) {
+            return UITypeEditorEditStyle.DropDown;
+        }
+
+        /// <summary>
+        /// 编辑值
+        /// </summary>
+        /// <param name="context">可用于获取附加上下文信息的 ITypeDescriptorContext。</param>
+        /// <param name="provider">一个 IServiceProvider ，此编辑器可用它来获取服务</param>
+        /// <param name="value">要编辑的对象。</param>
+        /// <returns>对象的新值。 如果尚未更改对象的值，则它返回的对象应与传递给它的对象相同。</returns>
+        public override object EditValue(ITypeDescriptorContext context, IServiceProvider provider, object value) {
+            if (context != null && context.Instance != null && provider != null) {
+                IWindowsFormsEditorService service = (IWindowsFormsEditorService)provider.GetService(typeof(IWindowsFormsEditorService));
+                if (service != null) {
+                    Matrix matrix = (Matrix)value;
+                    dialog.DataSource = matrix;
+                    // 在提供此服务的属性网格的值字段下方的下拉区域中显示指定控件。
+                    service.DropDownControl(dialog);
+                    return dialog.Value;
+                }
+            }
+            return null;
+        }
+    }
+
+    public class MatrixEditorDialog : MatrixDialog {
+        public MatrixEditorDialog() {
+            InitializeComponent();
+        }
+
+        public MatrixEditorDialog(IContainer container) {
+            container.Add(this);
+
+            InitializeComponent();
+        }
+
+        #region 绑定数据源
+        public Matrix DataSource {
+            set {
+                InitalMatrix = (Matrix)value;
+                SetValue();
+            }
+        }
+
+        public Matrix Value => GetValue();
         #endregion
     }
 }
