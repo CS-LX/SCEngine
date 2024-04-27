@@ -40,7 +40,7 @@ namespace SCEngine {
             if (currentWidget == null) return;
 
             //添加界面节点
-            DarkTreeNode rootNode = new DarkTreeNode(string.IsNullOrEmpty(currentWidget.Name) ? $"[{currentWidget.GetType().Name}]" : currentWidget.Name, currentWidget.GetType().Name);
+            DarkTreeNode rootNode = new DarkTreeNode(CreateNodeName(currentWidget), currentWidget.GetType().Name);
             rootNode.Tag = currentWidget;
             UpdateWidgetNodes(currentWidget, rootNode);
             widgetView.Nodes.Add(rootNode);
@@ -97,6 +97,8 @@ namespace SCEngine {
             newWidget = Activator.CreateInstance(type) as Widget;
             parentWidget.AddChildren(newWidget);
         }
+
+        private string CreateNodeName(Widget widget) => string.IsNullOrEmpty(widget.Name) ? $"[{widget.GetType().Name}]" : widget.Name;
         #endregion
 
         #region UI事件
@@ -127,7 +129,7 @@ namespace SCEngine {
                             //添加控件
                             AddWidget(containerWidget, selectedWidgetType, out Widget newWidget);
                             //添加节点
-                            DarkTreeNode newNode = new DarkTreeNode(string.IsNullOrEmpty(newWidget.Name) ? $"[{newWidget.GetType().Name}]" : newWidget.Name, newWidget.GetType().Name);
+                            DarkTreeNode newNode = new DarkTreeNode(CreateNodeName(newWidget), newWidget.GetType().Name);
                             newNode.Tag = newWidget;
                             widgetView.SelectedNodes.FirstOrDefault()?.Nodes.Add(newNode);
                         }
@@ -154,6 +156,14 @@ namespace SCEngine {
                 else {
                     DarkMessageBox.ShowWarning($"无法删除根控件", "无法操作");
                     return;
+                }
+            }
+        }
+        private void propertriesGrid_PropertyValueChanged(object s, PropertyValueChangedEventArgs e) {
+            if (e.ChangedItem?.Label == "Name") {
+                if (propertriesGrid.SelectedObject is AutoBrowsableTypeDescriptor descriptor && descriptor._instance is Widget editingWidget) {
+                    DarkTreeNode? selectedNode = widgetView.SelectedNodes?.FirstOrDefault();
+                    if (selectedNode != null) selectedNode.Text = CreateNodeName(editingWidget);
                 }
             }
         }

@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using DarkUI.Controls;
 
 namespace SCEngine {
     public static class UIUtils {
@@ -68,6 +69,16 @@ namespace SCEngine {
                 return result;
             }
             return input;
+        }
+
+        public static DarkTreeNode FindNodeByTag(object tag, DarkTreeNode root) {
+            if (root.Tag == tag) return root;
+            else {
+                foreach (DarkTreeNode darkTreeNode in root.Nodes) {
+                    FindNodeByTag(tag, darkTreeNode);
+                }
+            }
+            return null;
         }
     }
 }

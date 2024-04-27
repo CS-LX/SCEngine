@@ -166,6 +166,7 @@ namespace SCEngine {
             propertriesGrid.ViewBackColor = Color.FromArgb(60, 63, 65);
             propertriesGrid.ViewBorderColor = Color.FromArgb(51, 51, 51);
             propertriesGrid.ViewForeColor = Color.Gainsboro;
+            propertriesGrid.PropertyValueChanged += propertriesGrid_PropertyValueChanged;
             // 
             // WorldWidgetWindow
             // 
