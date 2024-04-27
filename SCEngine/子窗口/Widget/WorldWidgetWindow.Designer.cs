@@ -33,6 +33,7 @@ namespace SCEngine {
             splitContainer2 = new SplitContainer();
             darkSectionPanel2 = new DarkSectionPanel();
             toolBox = new DarkTreeView();
+            exportXmlButton = new DarkButton();
             removeWidgetButton = new DarkButton();
             darkSectionPanel1 = new DarkSectionPanel();
             propertriesGrid = new PropertyGridEx();
@@ -94,6 +95,7 @@ namespace SCEngine {
             // 
             // splitContainer2.Panel2
             // 
+            splitContainer2.Panel2.Controls.Add(exportXmlButton);
             splitContainer2.Panel2.Controls.Add(removeWidgetButton);
             splitContainer2.Panel2.Controls.Add(widgetView);
             splitContainer2.Size = new Size(633, 537);
@@ -119,6 +121,18 @@ namespace SCEngine {
             toolBox.Size = new Size(209, 511);
             toolBox.TabIndex = 0;
             toolBox.DoubleClick += toolBox_DoubleClick;
+            // 
+            // exportXmlButton
+            // 
+            exportXmlButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            exportXmlButton.CenterIcon = Properties.Resources.Export;
+            exportXmlButton.CenterIconScale = 0.32F;
+            exportXmlButton.Location = new Point(383, 502);
+            exportXmlButton.Name = "exportXmlButton";
+            exportXmlButton.Padding = new Padding(5);
+            exportXmlButton.Size = new Size(32, 32);
+            exportXmlButton.TabIndex = 2;
+            exportXmlButton.Click += exportXmlButton_Click;
             // 
             // removeWidgetButton
             // 
@@ -201,5 +215,6 @@ namespace SCEngine {
         private SplitContainer splitContainer2;
         private DarkTreeView toolBox;
         private DarkSectionPanel darkSectionPanel2;
+        private DarkButton exportXmlButton;
     }
 }

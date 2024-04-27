@@ -15,6 +15,10 @@ using System.Reflection;
 using DarkUI.Forms;
 using GameEntitySystem;
 using Screen = Game.Screen;
+using System.Xml.Linq;
+using XmlUtilities;
+using Engine;
+using System.Diagnostics;
 
 namespace SCEngine {
     public partial class WorldWidgetWindow : DarkToolWindow {
@@ -26,6 +30,7 @@ namespace SCEngine {
         public SubsystemPlayers subsystemPlayers;
         public ComponentGui componentGui;
         public ContainerWidget currentWidget;
+        private List<Type> widgetsInToolBox = new List<Type>();//工具箱里有的，可以直接来用的、视为单体的界面
         #endregion
 
         #region 方法
@@ -63,7 +68,7 @@ namespace SCEngine {
 
         public void UpdateToolBox() {
             Assembly assembly = Assembly.GetAssembly(typeof(Game.Program));
-
+            widgetsInToolBox.Clear();
             var widgetTypes = new List<Type>();
 
             foreach (var type in assembly.GetTypes()) {
@@ -82,6 +87,7 @@ namespace SCEngine {
                 DarkTreeNode darkTreeNode = new DarkTreeNode(UIUtils.TrimEnd(widgetType.Name, "Widget"));
                 darkTreeNode.Tag = widgetType;
                 toolBox.Nodes.Add(darkTreeNode);
+                widgetsInToolBox.Add(widgetType);
             }
         }
 
@@ -99,6 +105,61 @@ namespace SCEngine {
         }
 
         private string CreateNodeName(Widget widget) => string.IsNullOrEmpty(widget.Name) ? $"[{widget.GetType().Name}]" : widget.Name;
+
+        public void ExportWidget(Widget widget, string path) {
+            XElement rootElement = new XElement(widget.GetType().Name);
+            if (widget is ContainerWidget rootContainerWidget) {
+                foreach (var child in rootContainerWidget.Children) {
+                    WidgetToXml(child, rootElement);
+                }
+            }
+
+            using (Stream stream = Storage.OpenFile(@$"system:{path}", OpenFileMode.Create)) {
+                XmlUtils.SaveXmlToStream(rootElement, stream, null, throwOnError: true);
+            }
+        }
+
+        public void WidgetToXml(Widget widget, XElement parentElement) {
+            //先获取界面属性的默认值
+            Dictionary<string, object> defaultProps = new();
+            Widget? emptyPropsWidget = (Widget?)(UIUtils.CanInstantiate(widget.GetType()) ? Activator.CreateInstance(widget.GetType()) : null);
+            if (emptyPropsWidget != null) {
+                PropertyInfo[] defaultPropsInfo = widget.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
+                foreach (PropertyInfo propInfo in defaultPropsInfo) {
+                    if (!propInfo.CanRead ||
+                        !propInfo.CanWrite ||
+                        (propInfo.PropertyType.IsClass && !propInfo.PropertyType.Equals(typeof(string)))
+                        ) continue;
+                    defaultProps.Add(propInfo.Name, propInfo.GetValue(emptyPropsWidget));
+                }
+            }
+
+            //再添加Xml节点
+            XElement widgetElement = new XElement(widget.GetType().Name);
+            parentElement.Add(widgetElement);
+
+            //再添加属性
+            PropertyInfo[] propertyInfos = widget.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
+            foreach (PropertyInfo propInfo in propertyInfos) {
+                if (!propInfo.CanRead ||
+                    !propInfo.CanWrite ||
+                    (propInfo.PropertyType.IsClass && !propInfo.PropertyType.Equals(typeof(string)))
+                    ) continue;
+                object value = propInfo.GetValue(widget);
+                object defaultValue = defaultProps?[propInfo.Name];
+                if (!Object.Equals(value, defaultValue) && value != null) {//如果界面的某一属性不等于它的默认值
+                    XmlUtils.SetAttributeValue(widgetElement, propInfo.Name, value);
+                }
+            }
+
+            //递归加载子元素（可是为单体界面的不添加子元素）
+            if (widget is ContainerWidget container) {
+                foreach (Widget childWidget in container.Children) {
+                    //if (widgetsInToolBox.Contains(childWidget.GetType())) continue;
+                    WidgetToXml(childWidget, widgetElement);
+                }
+            }
+        }
         #endregion
 
         #region UI事件
@@ -166,6 +227,17 @@ namespace SCEngine {
                     if (selectedNode != null) selectedNode.Text = CreateNodeName(editingWidget);
                 }
             }
+        }
+        private void exportXmlButton_Click(object sender, EventArgs e) {
+            //try {
+            string filePath = @"D:\Test.xml";
+            ExportWidget(currentWidget, filePath);
+            DarkMessageBox.ShowInformation("导出成功", "");
+            Process.Start("explorer.exe", $"/select,\"{filePath}\"");
+            //}
+            //catch (Exception ex) {
+            //    DarkMessageBox.ShowError($"导出失败\r\n\r\n错误如下：\r\n{ex}", "");
+            //}
         }
         #endregion
     }
