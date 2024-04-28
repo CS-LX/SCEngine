@@ -19,6 +19,7 @@ using System.Xml.Linq;
 using XmlUtilities;
 using Engine;
 using System.Diagnostics;
+using SCEngine.Properties;
 
 namespace SCEngine {
     public partial class WorldWidgetWindow : DarkToolWindow {
@@ -146,8 +147,9 @@ namespace SCEngine {
                     !propInfo.CanWrite ||
                     (propInfo.PropertyType.IsClass && !propInfo.PropertyType.Equals(typeof(string)))
                     ) continue;
-                object value = propInfo.GetValue(widget);
-                object defaultValue = defaultProps?[propInfo.Name];
+                object? value = propInfo.GetValue(widget);
+                object? defaultValue = null;
+                if ((bool)(defaultProps?.ContainsKey(propInfo.Name))) defaultValue = defaultProps?[propInfo.Name];
                 if (!Object.Equals(value, defaultValue) && value != null) {//如果界面的某一属性不等于它的默认值
                     XmlUtils.SetAttributeValue(widgetElement, propInfo.Name, value);
                 }
