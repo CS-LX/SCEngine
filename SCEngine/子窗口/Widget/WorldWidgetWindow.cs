@@ -20,6 +20,8 @@ using XmlUtilities;
 using Engine;
 using System.Diagnostics;
 using SCEngine.Properties;
+using Jint.Native;
+using System.Xml;
 
 namespace SCEngine {
     public partial class WorldWidgetWindow : DarkToolWindow {
@@ -109,10 +111,10 @@ namespace SCEngine {
         private string CreateNodeName(Widget widget) => string.IsNullOrEmpty(widget.Name) ? $"[{widget.GetType().Name}]" : widget.Name;
 
         public void ExportWidget(Widget widget, string path) {
-            XElement rootElement = new XElement(widget.GetType().Name);
+            XElement rootElement = new XElement(XName.Get(widget.GetType().Name, "runtime-namespace:" + widget.GetType().Namespace));
             if (widget is ContainerWidget rootContainerWidget) {
                 foreach (var child in rootContainerWidget.Children) {
-                    WidgetToXml(child, rootElement);
+                    WidgetToXml(child, rootElement, widget is CanvasWidget canvasWidget ? canvasWidget.m_positions : null);
                 }
             }
 
@@ -121,7 +123,7 @@ namespace SCEngine {
             }
         }
 
-        public void WidgetToXml(Widget widget, XElement parentElement) {
+        public void WidgetToXml(Widget widget, XElement parentElement, Dictionary<Widget, Vector2>? widgetPositions = null) {
             //先获取界面属性的默认值
             Dictionary<string, object> defaultProps = new();
             Widget? emptyPropsWidget = (Widget?)(UIUtils.CanInstantiate(widget.GetType()) ? Activator.CreateInstance(widget.GetType()) : null);
@@ -137,7 +139,7 @@ namespace SCEngine {
             }
 
             //再添加Xml节点
-            XElement widgetElement = new XElement(widget.GetType().Name);
+            XElement widgetElement = new XElement(XName.Get(widget.GetType().Name, "runtime-namespace:" + widget.GetType().Namespace));
             parentElement.Add(widgetElement);
 
             //再添加属性
@@ -152,6 +154,13 @@ namespace SCEngine {
                 if ((bool)(defaultProps?.ContainsKey(propInfo.Name))) defaultValue = defaultProps?[propInfo.Name];
                 if (!Object.Equals(value, defaultValue) && value != null) {//如果界面的某一属性不等于它的默认值
                     XmlUtils.SetAttributeValue(widgetElement, propInfo.Name, value);
+                }
+            }
+
+            //再设置位置
+            if (widgetPositions != null) {
+                if (widgetPositions.Keys.Contains(widget)) {
+                    XmlUtils.SetAttributeValue(widgetElement, "CanvasWidget.Position", widgetPositions[widget]);
                 }
             }
 
