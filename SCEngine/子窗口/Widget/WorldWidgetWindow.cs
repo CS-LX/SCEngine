@@ -31,6 +31,7 @@ namespace SCEngine {
         public ComponentGui componentGui;
         public ContainerWidget currentWidget;
         private List<Type> widgetsInToolBox = new List<Type>();//工具箱里有的，可以直接来用的、视为单体的界面
+        private Type[] acceptChildWidgets = [typeof(CanvasWidget), typeof(StackPanelWidget), typeof(UniformSpacingPanelWidget)];
         #endregion
 
         #region 方法
@@ -154,9 +155,10 @@ namespace SCEngine {
 
             //递归加载子元素（可是为单体界面的不添加子元素）
             if (widget is ContainerWidget container) {
-                foreach (Widget childWidget in container.Children) {
-                    //if (widgetsInToolBox.Contains(childWidget.GetType())) continue;
-                    WidgetToXml(childWidget, widgetElement);
+                if (acceptChildWidgets.Contains(widget.GetType())) {
+                    foreach (Widget childWidget in container.Children) {
+                        WidgetToXml(childWidget, widgetElement);
+                    }
                 }
             }
         }
