@@ -37,6 +37,7 @@ namespace SCEngine {
             removeWidgetButton = new DarkButton();
             darkSectionPanel1 = new DarkSectionPanel();
             propertriesGrid = new PropertyGridEx();
+            enableXmlExportButton = new DarkButton();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
             splitContainer1.Panel1.SuspendLayout();
             splitContainer1.Panel2.SuspendLayout();
@@ -95,6 +96,7 @@ namespace SCEngine {
             // 
             // splitContainer2.Panel2
             // 
+            splitContainer2.Panel2.Controls.Add(enableXmlExportButton);
             splitContainer2.Panel2.Controls.Add(exportXmlButton);
             splitContainer2.Panel2.Controls.Add(removeWidgetButton);
             splitContainer2.Panel2.Controls.Add(widgetView);
@@ -182,6 +184,18 @@ namespace SCEngine {
             propertriesGrid.ViewForeColor = Color.Gainsboro;
             propertriesGrid.PropertyValueChanged += propertriesGrid_PropertyValueChanged;
             // 
+            // enableXmlExportButton
+            // 
+            enableXmlExportButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            enableXmlExportButton.CenterIcon = Properties.Resources.ChessboxPage;
+            enableXmlExportButton.CenterIconScale = 0.3F;
+            enableXmlExportButton.Location = new Point(41, 502);
+            enableXmlExportButton.Name = "enableXmlExportButton";
+            enableXmlExportButton.Padding = new Padding(5);
+            enableXmlExportButton.Size = new Size(32, 32);
+            enableXmlExportButton.TabIndex = 3;
+            enableXmlExportButton.Click += enableXmlExportButton_Click;
+            // 
             // WorldWidgetWindow
             // 
             AutoScaleDimensions = new SizeF(9F, 20F);
@@ -216,5 +230,6 @@ namespace SCEngine {
         private DarkTreeView toolBox;
         private DarkSectionPanel darkSectionPanel2;
         private DarkButton exportXmlButton;
+        private DarkButton enableXmlExportButton;
     }
 }
