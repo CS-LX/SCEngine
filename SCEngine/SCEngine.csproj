@@ -42,6 +42,9 @@
 	    <SubType>UserControl</SubType>
 	  </Compile>
 	  <Compile Update="子窗口\InspectorWindow.cs" />
+	  <Compile Update="子窗口\PropertyGridSC.cs">
+	    <SubType>Component</SubType>
+	  </Compile>
 	  <Compile Update="子窗口\StaticClasses\StaticClassesWindow.cs">
 	    <SubType>UserControl</SubType>
 	  </Compile>

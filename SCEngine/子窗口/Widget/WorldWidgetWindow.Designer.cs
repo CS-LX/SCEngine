@@ -38,7 +38,7 @@ namespace SCEngine {
             exportXmlButton = new DarkButton();
             removeWidgetButton = new DarkButton();
             darkSectionPanel1 = new DarkSectionPanel();
-            propertriesGrid = new PropertyGridEx();
+            propertriesGrid = new PropertyGridSC();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
             splitContainer1.Panel1.SuspendLayout();
             splitContainer1.Panel2.SuspendLayout();
@@ -237,7 +237,7 @@ namespace SCEngine {
         private System.Windows.Forms.Timer updateTimer;
         private DarkUI.Controls.DarkTreeView widgetView;
         private SplitContainer splitContainer1;
-        private PropertyGridEx propertriesGrid;
+        private PropertyGridSC propertriesGrid;
         private DarkUI.Controls.DarkSectionPanel darkSectionPanel1;
         private DarkButton removeWidgetButton;
         private SplitContainer splitContainer2;

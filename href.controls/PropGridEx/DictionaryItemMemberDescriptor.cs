@@ -4,49 +4,40 @@ using System.Text;
 using System.ComponentModel;
 using System.Collections;
 
-namespace href.Controls.PropGridEx
-{
+namespace href.Controls.PropGridEx {
 
     /// <summary>
     /// PropertyDescriptor for all items in an IDictionary
     /// </summary>
-    internal class DictionaryItemMemberDescriptor : PropertyDescriptor
-    {
+    public class DictionaryItemMemberDescriptor : PropertyDescriptor {
         private IDictionary m_Dict;
         private object m_Key;
 
-        internal DictionaryItemMemberDescriptor(IDictionary list, object key)
+        public DictionaryItemMemberDescriptor(IDictionary list, object key)
             :
-            base(String.Format("[{0}]", key), null)
-        {
+            base(String.Format("[{0}]", key), null) {
             this.m_Dict = list;
             this.m_Key = key;
         }
 
-        public override bool CanResetValue(object component)
-        {
+        public override bool CanResetValue(object component) {
             return false;
         }
 
-        public override Type ComponentType
-        {
+        public override Type ComponentType {
             get { return typeof(IDictionary); }
         }
 
-        public override object GetValue(object component)
-        {
+        public override object GetValue(object component) {
             return this.m_Dict[this.m_Key];
         }
 
-        public override bool IsReadOnly
-        {
+        public override bool IsReadOnly {
             get { return false; }
         }
 
-        public override Type PropertyType
-        {
-            get
-            {
+        public override Type PropertyType {
+            get {
                 object val = this.m_Dict[this.m_Key];
                 if (val != null)
                     return val.GetType();
@@ -55,18 +46,15 @@ namespace href.Controls.PropGridEx
             }
         }
 
-        public override void ResetValue(object component)
-        {
+        public override void ResetValue(object component) {
 
         }
 
-        public override void SetValue(object component, object value)
-        {
+        public override void SetValue(object component, object value) {
 
         }
 
-        public override bool ShouldSerializeValue(object component)
-        {
+        public override bool ShouldSerializeValue(object component) {
             return false;
         }
 
@@ -75,25 +63,20 @@ namespace href.Controls.PropGridEx
         /// Create an AttributeCollection that ensures an ExpandableObjectConverter
         /// and add Description and Category attributes
         /// </summary>
-        public override AttributeCollection Attributes
-        {
-            get
-            {
+        public override AttributeCollection Attributes {
+            get {
                 bool hasExpandebleTypeConverter = false;
                 AttributeCollection baseAttribs = base.Attributes;
                 List<Attribute> attributes = new List<Attribute>(baseAttribs.Count);
-                foreach (Attribute baseAttribute in baseAttribs)
-                {
+                foreach (Attribute baseAttribute in baseAttribs) {
                     TypeConverterAttribute tca = baseAttribute as TypeConverterAttribute;
 
-                    if ( (tca != null) && (Type.GetType( tca.ConverterTypeName).IsSubclassOf(typeof(ExpandableObjectConverter)) ) )
-                    {
+                    if ((tca != null) && (Type.GetType(tca.ConverterTypeName).IsSubclassOf(typeof(ExpandableObjectConverter)))) {
                         attributes.Add(baseAttribute);
                         hasExpandebleTypeConverter = true;
-                    
+
                     }
-                    else
-                    {
+                    else {
                         attributes.Add(baseAttribute);
                     }
                 }
@@ -107,15 +90,12 @@ namespace href.Controls.PropGridEx
 
 
                 // add expandable type conv?
-                if (this.m_Key != null)
-                {
-                    object value = this.m_Dict[ this.m_Key];
-                    if (value != null)
-                    {
+                if (this.m_Key != null) {
+                    object value = this.m_Dict[this.m_Key];
+                    if (value != null) {
                         Type valueType = value.GetType();
                         // add expandable type conv?
-                        if ((!hasExpandebleTypeConverter) && (!valueType.IsValueType) && (valueType != typeof(string)))
-                        {
+                        if ((!hasExpandebleTypeConverter) && (!valueType.IsValueType) && (valueType != typeof(string))) {
                             attributes.Add(new TypeConverterAttribute(typeof(ExpandableObjectConverter)));
                         }
                     }
@@ -128,5 +108,5 @@ namespace href.Controls.PropGridEx
             }
         }
     }
-   
+
 }

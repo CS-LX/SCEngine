@@ -1,8 +1,10 @@
 using DarkUI.Controls;
 using href.Controls.PropGridEx;
 
-namespace SCEngine {
-    partial class StaticClassesWindow {
+namespace SCEngine
+{
+    partial class StaticClassesWindow
+    {
         /// <summary>
         /// Required designer variable.
         /// </summary>
@@ -12,8 +14,10 @@ namespace SCEngine {
         /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing) {
-            if (disposing && (components != null)) {
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
                 components.Dispose();
             }
             base.Dispose(disposing);
@@ -25,14 +29,15 @@ namespace SCEngine {
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
         /// </summary>
-        private void InitializeComponent() {
+        private void InitializeComponent()
+        {
             staticClassesView = new DarkListView();
             splitContainer1 = new SplitContainer();
             assembliesList = new DarkDropdownList();
             searchButton = new DarkButton();
             searchKeyBox = new DarkTextBox();
             darkSectionPanel1 = new DarkSectionPanel();
-            propertriesGrid = new PropertyGridEx();
+            propertriesGrid = new PropertyGridSC();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
             splitContainer1.Panel1.SuspendLayout();
             splitContainer1.Panel2.SuspendLayout();
@@ -163,7 +168,7 @@ namespace SCEngine {
         #endregion
         private DarkListView staticClassesView;
         private SplitContainer splitContainer1;
-        private PropertyGridEx propertriesGrid;
+        private PropertyGridSC propertriesGrid;
         private DarkUI.Controls.DarkSectionPanel darkSectionPanel1;
         private DarkUI.Controls.DarkTextBox searchKeyBox;
         private DarkUI.Controls.DarkButton searchButton;
