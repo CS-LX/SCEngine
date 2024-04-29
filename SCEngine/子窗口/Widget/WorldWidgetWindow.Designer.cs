@@ -33,11 +33,12 @@ namespace SCEngine {
             splitContainer2 = new SplitContainer();
             darkSectionPanel2 = new DarkSectionPanel();
             toolBox = new DarkTreeView();
+            newWidgetButton = new DarkButton();
+            enableXmlExportButton = new DarkButton();
             exportXmlButton = new DarkButton();
             removeWidgetButton = new DarkButton();
             darkSectionPanel1 = new DarkSectionPanel();
             propertriesGrid = new PropertyGridEx();
-            enableXmlExportButton = new DarkButton();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
             splitContainer1.Panel1.SuspendLayout();
             splitContainer1.Panel2.SuspendLayout();
@@ -96,6 +97,7 @@ namespace SCEngine {
             // 
             // splitContainer2.Panel2
             // 
+            splitContainer2.Panel2.Controls.Add(newWidgetButton);
             splitContainer2.Panel2.Controls.Add(enableXmlExportButton);
             splitContainer2.Panel2.Controls.Add(exportXmlButton);
             splitContainer2.Panel2.Controls.Add(removeWidgetButton);
@@ -123,6 +125,30 @@ namespace SCEngine {
             toolBox.Size = new Size(209, 511);
             toolBox.TabIndex = 0;
             toolBox.DoubleClick += toolBox_DoubleClick;
+            // 
+            // newWidgetButton
+            // 
+            newWidgetButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            newWidgetButton.CenterIcon = Properties.Resources.Add;
+            newWidgetButton.CenterIconScale = 0.4F;
+            newWidgetButton.Location = new Point(345, 502);
+            newWidgetButton.Name = "newWidgetButton";
+            newWidgetButton.Padding = new Padding(5);
+            newWidgetButton.Size = new Size(32, 32);
+            newWidgetButton.TabIndex = 4;
+            newWidgetButton.Click += newWidgetButton_Click;
+            // 
+            // enableXmlExportButton
+            // 
+            enableXmlExportButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            enableXmlExportButton.CenterIcon = Properties.Resources.ChessboxPage;
+            enableXmlExportButton.CenterIconScale = 0.3F;
+            enableXmlExportButton.Location = new Point(41, 502);
+            enableXmlExportButton.Name = "enableXmlExportButton";
+            enableXmlExportButton.Padding = new Padding(5);
+            enableXmlExportButton.Size = new Size(32, 32);
+            enableXmlExportButton.TabIndex = 3;
+            enableXmlExportButton.Click += enableXmlExportButton_Click;
             // 
             // exportXmlButton
             // 
@@ -184,18 +210,6 @@ namespace SCEngine {
             propertriesGrid.ViewForeColor = Color.Gainsboro;
             propertriesGrid.PropertyValueChanged += propertriesGrid_PropertyValueChanged;
             // 
-            // enableXmlExportButton
-            // 
-            enableXmlExportButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            enableXmlExportButton.CenterIcon = Properties.Resources.ChessboxPage;
-            enableXmlExportButton.CenterIconScale = 0.3F;
-            enableXmlExportButton.Location = new Point(41, 502);
-            enableXmlExportButton.Name = "enableXmlExportButton";
-            enableXmlExportButton.Padding = new Padding(5);
-            enableXmlExportButton.Size = new Size(32, 32);
-            enableXmlExportButton.TabIndex = 3;
-            enableXmlExportButton.Click += enableXmlExportButton_Click;
-            // 
             // WorldWidgetWindow
             // 
             AutoScaleDimensions = new SizeF(9F, 20F);
@@ -231,5 +245,6 @@ namespace SCEngine {
         private DarkSectionPanel darkSectionPanel2;
         private DarkButton exportXmlButton;
         private DarkButton enableXmlExportButton;
+        private DarkButton newWidgetButton;
     }
 }

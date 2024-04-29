@@ -289,7 +289,7 @@ namespace SCEngine {
             DarkMessageBox.ShowInformation("导出成功", "");
             Process.Start("explorer.exe", $"/select,\"{filePath}\"");
 #if !DEBUG
-        }
+            }
             catch (Exception ex) {
                 DarkMessageBox.ShowError($"导出失败\r\n\r\n错误如下：\r\n{ex}", "");
             }
@@ -306,6 +306,12 @@ namespace SCEngine {
                 UpdateNodeStates(widgetView.Nodes);
             }
         }
-        #endregion
+        private void newWidgetButton_Click(object sender, EventArgs e) {
+            CanvasWidget canvasWidget = new CanvasWidget();
+            BevelledRectangleWidget rectangleWidget = new BevelledRectangleWidget { Size = new Vector2(360, 240), HorizontalAlignment = WidgetAlignment.Center, VerticalAlignment = WidgetAlignment.Center };
+            canvasWidget.Children.Add(rectangleWidget);
+            if (componentGui != null) componentGui.ModalPanelWidget = canvasWidget;
+        }
+        #endregion  
     }
 }
