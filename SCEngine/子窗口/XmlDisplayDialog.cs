@@ -11,8 +11,13 @@ using DarkUI.Forms;
 
 namespace SCEngine {
     public partial class XmlDisplayDialog : DarkDialog {
-        public XmlDisplayDialog() {
+        public string XmlString {
+            get => xmlTextBox.Text;
+            set => xmlTextBox.Text = value;
+        }
+        public XmlDisplayDialog(string xmlString) {
             InitializeComponent();
+            XmlString = xmlString;
         }
     }
 }

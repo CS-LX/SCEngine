@@ -129,6 +129,15 @@ namespace SCEngine {
                 XmlUtils.SaveXmlToStream(rootElement, stream, null, throwOnError: true);
             }
         }
+        public string EncodeWidget(Widget widget) {//界面转为xml
+            XElement rootElement = new XElement(XName.Get(widget.GetType().Name, "runtime-namespace:" + widget.GetType().Namespace));
+            if (widget is ContainerWidget rootContainerWidget) {
+                foreach (var child in rootContainerWidget.Children) {
+                    WidgetToXml(child, rootElement, widget is CanvasWidget canvasWidget ? canvasWidget.m_positions : null);
+                }
+            }
+            return XmlUtils.SaveXmlToString(rootElement, true);
+        }
 
         public void WidgetToXml(Widget widget, XElement parentElement, Dictionary<Widget, Vector2>? widgetPositions = null) {
             if (!widgetExportEnable[widget]) return;
@@ -312,6 +321,19 @@ namespace SCEngine {
             canvasWidget.Children.Add(rectangleWidget);
             if (componentGui != null) componentGui.ModalPanelWidget = canvasWidget;
         }
-        #endregion  
+        private void viewXmlButton_Click(object sender, EventArgs e) {
+#if !DEBUG
+            try {
+#endif
+            XmlDisplayDialog xmlDisplayDialog = new XmlDisplayDialog(EncodeWidget(currentWidget));
+            xmlDisplayDialog.ShowDialog();
+#if !DEBUG
+            }
+            catch (Exception ex) {
+                DarkMessageBox.ShowError($"导出失败\r\n\r\n错误如下：\r\n{ex}", "");
+            }
+#endif
+        }
+        #endregion
     }
 }
