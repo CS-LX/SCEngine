@@ -4,3 +4,6 @@
 [submodule "DarkUI-Extend"]
 	path = DarkUI-Extend
 	url = https://github.com/CS-LX/DarkUI-Extend.git
+[submodule "FastColoredTextBox"]
+	path = FastColoredTextBox
+	url = https://github.com/CS-LX/FastColoredTextBox.git

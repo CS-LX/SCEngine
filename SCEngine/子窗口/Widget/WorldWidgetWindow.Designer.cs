@@ -39,6 +39,8 @@ namespace SCEngine {
             removeWidgetButton = new DarkButton();
             darkSectionPanel1 = new DarkSectionPanel();
             propertriesGrid = new PropertyGridSC();
+            importButton = new DarkButton();
+            viewXmlButton = new DarkButton();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
             splitContainer1.Panel1.SuspendLayout();
             splitContainer1.Panel2.SuspendLayout();
@@ -97,6 +99,8 @@ namespace SCEngine {
             // 
             // splitContainer2.Panel2
             // 
+            splitContainer2.Panel2.Controls.Add(viewXmlButton);
+            splitContainer2.Panel2.Controls.Add(importButton);
             splitContainer2.Panel2.Controls.Add(newWidgetButton);
             splitContainer2.Panel2.Controls.Add(enableXmlExportButton);
             splitContainer2.Panel2.Controls.Add(exportXmlButton);
@@ -131,7 +135,7 @@ namespace SCEngine {
             newWidgetButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             newWidgetButton.CenterIcon = Properties.Resources.Add;
             newWidgetButton.CenterIconScale = 0.4F;
-            newWidgetButton.Location = new Point(345, 502);
+            newWidgetButton.Location = new Point(307, 502);
             newWidgetButton.Name = "newWidgetButton";
             newWidgetButton.Padding = new Padding(5);
             newWidgetButton.Size = new Size(32, 32);
@@ -210,6 +214,28 @@ namespace SCEngine {
             propertriesGrid.ViewForeColor = Color.Gainsboro;
             propertriesGrid.PropertyValueChanged += propertriesGrid_PropertyValueChanged;
             // 
+            // importButton
+            // 
+            importButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            importButton.CenterIcon = Properties.Resources.Import;
+            importButton.CenterIconScale = 0.32F;
+            importButton.Location = new Point(345, 502);
+            importButton.Name = "importButton";
+            importButton.Padding = new Padding(5);
+            importButton.Size = new Size(32, 32);
+            importButton.TabIndex = 5;
+            // 
+            // viewXmlButton
+            // 
+            viewXmlButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            viewXmlButton.CenterIcon = Properties.Resources.Xml;
+            viewXmlButton.CenterIconScale = 0.32F;
+            viewXmlButton.Location = new Point(269, 502);
+            viewXmlButton.Name = "viewXmlButton";
+            viewXmlButton.Padding = new Padding(5);
+            viewXmlButton.Size = new Size(32, 32);
+            viewXmlButton.TabIndex = 6;
+            // 
             // WorldWidgetWindow
             // 
             AutoScaleDimensions = new SizeF(9F, 20F);
@@ -246,5 +272,7 @@ namespace SCEngine {
         private DarkButton exportXmlButton;
         private DarkButton enableXmlExportButton;
         private DarkButton newWidgetButton;
+        private DarkButton importButton;
+        private DarkButton viewXmlButton;
     }
 }

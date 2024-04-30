@@ -19,5 +19,8 @@
     <Compile Update="子窗口\Subsystem\WorldSubsystemsWindow.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Update="子窗口\XmlDisplayDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
   </ItemGroup>
 </Project>
