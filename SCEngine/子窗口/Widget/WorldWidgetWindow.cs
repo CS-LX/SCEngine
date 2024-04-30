@@ -63,6 +63,17 @@ namespace SCEngine {
             UpdateNodeStates(widgetView.Nodes);
         }
 
+        public void UpdateControls() {
+            viewXmlButton.Enabled = currentWidget != null;
+            exportXmlButton.Enabled = currentWidget != null;
+
+            enableXmlExportButton.Enabled = widgetView.SelectedNodes.FirstOrDefault()?.Tag != null;
+            removeWidgetButton.Enabled = widgetView.SelectedNodes.FirstOrDefault()?.Tag != null;
+
+            newWidgetButton.Enabled = componentGui != null;
+            importButton.Enabled = componentGui != null;
+        }
+
         private void UpdateWidgetNodes(ContainerWidget widget, DarkTreeNode parentNode) {//递归添加界面组件进入树状图
             if (widget == null || parentNode == null) return;
 
@@ -226,6 +237,7 @@ namespace SCEngine {
         }
         private void WorldWidgetWindow_Load(object sender, EventArgs e) {
             updateTimer.Enabled = true;
+            updateControlsTimer.Enabled = true;
             UpdateToolBox();
         }
         private void widgetView_SelectedNodesChanged(object sender, EventArgs e) {
@@ -333,6 +345,9 @@ namespace SCEngine {
                 DarkMessageBox.ShowError($"导出失败\r\n\r\n错误如下：\r\n{ex}", "");
             }
 #endif
+        }
+        private void updateControlsTimer_Tick(object sender, EventArgs e) {
+            UpdateControls();
         }
         #endregion
     }

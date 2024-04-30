@@ -78,8 +78,10 @@ namespace SCEngine {
             xmlTextBox.CharHeight = 18;
             xmlTextBox.CharWidth = 10;
             xmlTextBox.CommentPrefix = null;
+            xmlTextBox.DefaultMarkerSize = 8;
             xmlTextBox.DisabledColor = Color.FromArgb(100, 180, 180, 180);
             xmlTextBox.Dock = DockStyle.Fill;
+            xmlTextBox.Font = new Font("Courier New", 9.75F);
             xmlTextBox.Hotkeys = resources.GetString("xmlTextBox.Hotkeys");
             xmlTextBox.IsReplaceMode = false;
             xmlTextBox.Language = FastColoredTextBoxNS.Language.XML;
@@ -88,6 +90,7 @@ namespace SCEngine {
             xmlTextBox.Location = new Point(0, 0);
             xmlTextBox.Name = "xmlTextBox";
             xmlTextBox.Paddings = new Padding(0);
+            xmlTextBox.ReadOnly = true;
             xmlTextBox.RightBracket = '>';
             xmlTextBox.RightBracket2 = ')';
             xmlTextBox.SelectionColor = Color.FromArgb(60, 0, 0, 255);

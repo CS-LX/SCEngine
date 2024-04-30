@@ -41,6 +41,7 @@ namespace SCEngine {
             removeWidgetButton = new DarkButton();
             darkSectionPanel1 = new DarkSectionPanel();
             propertriesGrid = new PropertyGridSC();
+            updateControlsTimer = new System.Windows.Forms.Timer(components);
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
             splitContainer1.Panel1.SuspendLayout();
             splitContainer1.Panel2.SuspendLayout();
@@ -237,6 +238,10 @@ namespace SCEngine {
             propertriesGrid.ViewForeColor = Color.Gainsboro;
             propertriesGrid.PropertyValueChanged += propertriesGrid_PropertyValueChanged;
             // 
+            // updateControlsTimer
+            // 
+            updateControlsTimer.Tick += updateControlsTimer_Tick;
+            // 
             // WorldWidgetWindow
             // 
             AutoScaleDimensions = new SizeF(9F, 20F);
@@ -275,5 +280,6 @@ namespace SCEngine {
         private DarkButton newWidgetButton;
         private DarkButton importButton;
         private DarkButton viewXmlButton;
+        private System.Windows.Forms.Timer updateControlsTimer;
     }
 }
