@@ -25,7 +25,7 @@ namespace SCEngine {
         private void InitializeComponent() {
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(XmlDisplayDialog));
-            xmlTextBox = new FastColoredTextBoxNS.FastColoredTextBox();
+            xmlTextBox = new FastColoredTextBoxNS.DarkFastColoredTextBox();
             ((System.ComponentModel.ISupportInitialize)xmlTextBox).BeginInit();
             SuspendLayout();
             // 
@@ -73,20 +73,26 @@ namespace SCEngine {
     '\''
     };
             xmlTextBox.AutoIndentCharsPatterns = "";
-            xmlTextBox.AutoScrollMinSize = new Size(211, 54);
+            xmlTextBox.AutoScrollMinSize = new Size(731, 54);
             xmlTextBox.BackBrush = null;
+            xmlTextBox.BackColor = Color.FromArgb(60, 63, 65);
             xmlTextBox.CharHeight = 18;
             xmlTextBox.CharWidth = 10;
             xmlTextBox.CommentPrefix = null;
+            xmlTextBox.CurrentLineColor = Color.FromArgb(75, 110, 175);
             xmlTextBox.DefaultMarkerSize = 8;
             xmlTextBox.DisabledColor = Color.FromArgb(100, 180, 180, 180);
             xmlTextBox.Dock = DockStyle.Fill;
+            xmlTextBox.FoldingIndicatorColor = Color.FromArgb(75, 110, 175);
             xmlTextBox.Font = new Font("Courier New", 9.75F);
+            xmlTextBox.ForeColor = Color.Gainsboro;
             xmlTextBox.Hotkeys = resources.GetString("xmlTextBox.Hotkeys");
+            xmlTextBox.IndentBackColor = Color.FromArgb(81, 81, 81);
             xmlTextBox.IsReplaceMode = false;
             xmlTextBox.Language = FastColoredTextBoxNS.Language.XML;
             xmlTextBox.LeftBracket = '<';
             xmlTextBox.LeftBracket2 = '(';
+            xmlTextBox.LineNumberColor = Color.FromArgb(153, 153, 153);
             xmlTextBox.Location = new Point(0, 0);
             xmlTextBox.Name = "xmlTextBox";
             xmlTextBox.Paddings = new Padding(0);
@@ -95,19 +101,21 @@ namespace SCEngine {
             xmlTextBox.RightBracket2 = ')';
             xmlTextBox.SelectionColor = Color.FromArgb(60, 0, 0, 255);
             xmlTextBox.ServiceColors = (FastColoredTextBoxNS.ServiceColors)resources.GetObject("xmlTextBox.ServiceColors");
-            xmlTextBox.Size = new Size(851, 466);
+            xmlTextBox.ShowScrollBars = false;
+            xmlTextBox.Size = new Size(933, 539);
             xmlTextBox.TabIndex = 2;
-            xmlTextBox.Text = "<AAA>\r\n  <BBB XXX=\"CCC\"/>\r\n</AAA>";
+            xmlTextBox.Text = "<AAA>\r\n  <BBB XXX=\"CCC\" DDD=\"测试\" FFF=\"1234567890qwertyuiopasdfghjklzxcvbnm\"/>\r\n</AAA>";
             xmlTextBox.Zoom = 100;
             // 
             // XmlDisplayDialog
             // 
             AutoScaleDimensions = new SizeF(9F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(851, 535);
+            ClientSize = new Size(933, 608);
             Controls.Add(xmlTextBox);
             Name = "XmlDisplayDialog";
             Text = "预览xml";
+            Load += XmlDisplayDialog_Load;
             Controls.SetChildIndex(xmlTextBox, 0);
             ((System.ComponentModel.ISupportInitialize)xmlTextBox).EndInit();
             ResumeLayout(false);
@@ -115,6 +123,6 @@ namespace SCEngine {
 
         #endregion
 
-        private FastColoredTextBoxNS.FastColoredTextBox xmlTextBox;
+        private FastColoredTextBoxNS.DarkFastColoredTextBox xmlTextBox;
     }
 }

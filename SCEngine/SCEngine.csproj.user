@@ -4,6 +4,9 @@
     <Compile Update="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="子窗口\DarkFastColoredTextBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Update="子窗口\MatrixDialog.cs">
       <SubType>Form</SubType>
     </Compile>
