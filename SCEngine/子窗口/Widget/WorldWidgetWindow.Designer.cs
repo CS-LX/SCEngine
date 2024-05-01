@@ -153,6 +153,7 @@ namespace SCEngine {
             importButton.Padding = new Padding(5);
             importButton.Size = new Size(32, 32);
             importButton.TabIndex = 5;
+            importButton.Click += importButton_Click;
             // 
             // newWidgetButton
             // 

@@ -40,6 +40,7 @@ namespace SCEngine {
         //界面是否导出为xml
         private Dictionary<Widget, bool> widgetExportEnable = new Dictionary<Widget, bool>();
         private List<Widget> userSelectedExportEnable = new List<Widget>();//用户指定的可以导出xml的界面
+        private string filePath = "";
         #endregion
 
         #region 方法
@@ -128,8 +129,8 @@ namespace SCEngine {
 
         private string CreateNodeName(Widget widget) => string.IsNullOrEmpty(widget.Name) ? $"[{widget.GetType().Name}]" : widget.Name;
 
-        public void ExportWidget(Widget widget, string path) {
-            XElement rootElement = new XElement(XName.Get(widget.GetType().Name, "runtime-namespace:" + widget.GetType().Namespace));
+        public void ExportWidget(Widget widget, string path, string rootNodeName) {
+            XElement rootElement = new XElement(XName.Get(rootNodeName, "runtime-namespace:" + widget.GetType().Namespace));
             if (widget is ContainerWidget rootContainerWidget) {
                 foreach (var child in rootContainerWidget.Children) {
                     WidgetToXml(child, rootElement, widget is CanvasWidget canvasWidget ? canvasWidget.m_positions : null);
@@ -305,10 +306,14 @@ namespace SCEngine {
 #if !DEBUG
             try {
 #endif
-            string filePath = @"D:\Test.xml";
-            ExportWidget(currentWidget, filePath);
-            DarkMessageBox.ShowInformation("导出成功", "");
-            Process.Start("explorer.exe", $"/select,\"{filePath}\"");
+            WidgetExportXmlDialog dialog = new WidgetExportXmlDialog();
+            dialog.XmlPath = filePath;
+            dialog.RootNodeText = currentWidget.GetType().Name;
+            if (dialog.ShowDialog() == DialogResult.OK) {
+                ExportWidget(currentWidget, dialog.XmlPath, dialog.RootNodeText);
+                DarkMessageBox.ShowInformation("导出成功", "");
+                Process.Start("explorer.exe", $"/select,\"{dialog.XmlPath}\"");
+            }
 #if !DEBUG
             }
             catch (Exception ex) {
@@ -348,6 +353,25 @@ namespace SCEngine {
         }
         private void updateControlsTimer_Tick(object sender, EventArgs e) {
             UpdateControls();
+        }
+        private void importButton_Click(object sender, EventArgs e) {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Xml files (*.xml)|*.xml|All files (*.*)|*.*";
+            openFileDialog.Title = "选择界面的xml文件";
+            try {
+                if (openFileDialog.ShowDialog() == DialogResult.OK) {
+                    filePath = Path.GetFullPath(openFileDialog.FileName);
+                    using (FileStream fileStream = new FileStream(filePath, FileMode.Open)) {
+                        CanvasWidget canvasWidget = new CanvasWidget();
+                        XElement node = XElement.Load(fileStream);
+                        canvasWidget.LoadChildren(canvasWidget, node);
+                        if (componentGui != null) componentGui.ModalPanelWidget = canvasWidget;
+                    }
+                }
+            }
+            catch (Exception ex) {
+                DarkMessageBox.ShowError($"导入失败\r\n\r\n错误如下：\r\n{ex}", "");
+            }
         }
         #endregion
     }
