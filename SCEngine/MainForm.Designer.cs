@@ -27,9 +27,9 @@ partial class MainForm {
         WorkingPanel = new DarkUI.Docking.DarkDockPanel();
         darkMenuStrip1 = new DarkUI.Controls.DarkMenuStrip();
         游戏ToolStripMenuItem = new ToolStripMenuItem();
+        退出ToolStripMenuItem = new ToolStripMenuItem();
         窗口ToolStripMenuItem = new ToolStripMenuItem();
         添加ToolStripMenuItem = new ToolStripMenuItem();
-        退出ToolStripMenuItem = new ToolStripMenuItem();
         darkMenuStrip1.SuspendLayout();
         SuspendLayout();
         // 
@@ -55,6 +55,7 @@ partial class MainForm {
         darkMenuStrip1.Size = new Size(1241, 28);
         darkMenuStrip1.TabIndex = 1;
         darkMenuStrip1.Text = "darkMenuStrip1";
+        darkMenuStrip1.ItemClicked += darkMenuStrip1_ItemClicked;
         // 
         // 游戏ToolStripMenuItem
         // 
@@ -64,6 +65,15 @@ partial class MainForm {
         游戏ToolStripMenuItem.Name = "游戏ToolStripMenuItem";
         游戏ToolStripMenuItem.Size = new Size(53, 24);
         游戏ToolStripMenuItem.Text = "程序";
+        // 
+        // 退出ToolStripMenuItem
+        // 
+        退出ToolStripMenuItem.BackColor = Color.FromArgb(60, 63, 65);
+        退出ToolStripMenuItem.ForeColor = Color.FromArgb(220, 220, 220);
+        退出ToolStripMenuItem.Name = "退出ToolStripMenuItem";
+        退出ToolStripMenuItem.Size = new Size(122, 26);
+        退出ToolStripMenuItem.Text = "退出";
+        退出ToolStripMenuItem.Click += 退出ToolStripMenuItem_Click;
         // 
         // 窗口ToolStripMenuItem
         // 
@@ -79,17 +89,8 @@ partial class MainForm {
         添加ToolStripMenuItem.BackColor = Color.FromArgb(60, 63, 65);
         添加ToolStripMenuItem.ForeColor = Color.FromArgb(220, 220, 220);
         添加ToolStripMenuItem.Name = "添加ToolStripMenuItem";
-        添加ToolStripMenuItem.Size = new Size(224, 26);
+        添加ToolStripMenuItem.Size = new Size(122, 26);
         添加ToolStripMenuItem.Text = "添加";
-        // 
-        // 退出ToolStripMenuItem
-        // 
-        退出ToolStripMenuItem.BackColor = Color.FromArgb(60, 63, 65);
-        退出ToolStripMenuItem.ForeColor = Color.FromArgb(220, 220, 220);
-        退出ToolStripMenuItem.Name = "退出ToolStripMenuItem";
-        退出ToolStripMenuItem.Size = new Size(224, 26);
-        退出ToolStripMenuItem.Text = "退出";
-        退出ToolStripMenuItem.Click += 退出ToolStripMenuItem_Click;
         // 
         // MainForm
         // 
