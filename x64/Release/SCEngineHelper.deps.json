@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": "net8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    "net8.0": {
+      "SCEngineHelper/1.0.0": {
+        "runtime": {
+          "SCEngineHelper.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "SCEngineHelper/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

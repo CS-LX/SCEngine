@@ -29,6 +29,7 @@
 		<ProjectReference Include="..\DarkUI-Extend\DarkUI\DarkUI.csproj" />
 		<ProjectReference Include="..\FastColoredTextBox\FastColoredTextBox\FastColoredTextBox.csproj" />
 		<ProjectReference Include="..\href.controls\href.Controls.csproj" />
+		<ProjectReference Include="..\SCEngineHelper\SCEngineHelper.vcxproj" />
 		<ProjectReference Include="..\survivalcraft-api\Engine\Engine.csproj" />
 		<ProjectReference Include="..\survivalcraft-api\EntitySystem\EntitySystem.csproj" />
 		<ProjectReference Include="..\survivalcraft-api\Survivalcraft\Survivalcraft.csproj" />

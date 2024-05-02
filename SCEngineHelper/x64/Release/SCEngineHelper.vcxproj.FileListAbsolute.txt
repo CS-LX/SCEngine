@@ -1,0 +1,5 @@
+D:\CS Project\SCEngine\x64\Release\Ijwhost.dll
+D:\CS Project\SCEngine\x64\Release\SCEngineHelper.deps.json
+D:\CS Project\SCEngine\x64\Release\SCEngineHelper.runtimeconfig.json
+D:\CS Project\SCEngine\SCEngineHelper\x64\Release\SCEngineHelper.sourcelink.json
+D:\CS Project\SCEngine\SCEngineHelper\x64\Release\SCEngineHelper.genruntimeconfig.cache
