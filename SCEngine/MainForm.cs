@@ -6,23 +6,41 @@ using DarkUI.Forms;
 namespace SCEngine;
 
 public partial class MainForm : DarkForm {
-    public List<DarkToolWindow> ToolWindows = new();
 
+    #region 字段
+    public List<DarkToolWindow> ToolWindows = new();
     public static readonly Dictionary<Type, string> WindowNames = new Dictionary<Type, string>() {
         { typeof(WorldEnititesWindow), "世界实体" },
         { typeof(WorldSubsystemsWindow), "世界子系统" },
         { typeof(StaticClassesWindow), "静态类" },
         { typeof(WorldWidgetWindow), "界面编辑器-玩家呈现" }
     };
+    #endregion
 
-
-
+    #region 方法
     public MainForm() {
         InitializeComponent();
         Application.AddMessageFilter(WorkingPanel.DockContentDragFilter);
         Application.AddMessageFilter(WorkingPanel.DockResizeFilter);
     }
 
+    public static IEnumerable<Type> GetDarkToolWindowTypes() {
+        // 获取当前程序集
+        Assembly assembly = Assembly.GetExecutingAssembly();
+
+        // 获取所有继承自DarkToolWindow的类型
+        IEnumerable<Type> darkToolWindowTypes = assembly.GetTypes()
+            .Where(t => t.IsSubclassOf(typeof(DarkToolWindow)));
+
+        // 筛选出可以被Activator.CreateInstance创建的类型
+        IEnumerable<Type> creatableTypes = darkToolWindowTypes
+            .Where(UIUtils.CanInstantiate);
+
+        return creatableTypes;
+    }
+    #endregion
+
+    #region UI事件
     private void WorkingPanel_Load(object sender, EventArgs e) {
         var entitiesWindow = new WorldEnititesWindow();
         var subsystemsWindow = new WorldSubsystemsWindow();
@@ -48,7 +66,9 @@ public partial class MainForm : DarkForm {
     private void 添加ToolStripMenuItem_DropDownItemClicked(object? sender, ToolStripItemClickedEventArgs e) {
         switch (e.ClickedItem?.Name) {
             case "OpenWindowItem":
-                WorkingPanel.AddContent((DarkDockContent)Activator.CreateInstance(e.ClickedItem?.Tag as Type));
+                DarkToolWindow newWindow = (DarkToolWindow)Activator.CreateInstance(e.ClickedItem?.Tag as Type);
+                WorkingPanel.AddContent(newWindow);
+                ToolWindows.Add(newWindow);
                 break;
         }
     }
@@ -60,22 +80,12 @@ public partial class MainForm : DarkForm {
         Application.Exit();
     }
 
-    public static IEnumerable<Type> GetDarkToolWindowTypes() {
-        // 获取当前程序集
-        Assembly assembly = Assembly.GetExecutingAssembly();
-
-        // 获取所有继承自DarkToolWindow的类型
-        IEnumerable<Type> darkToolWindowTypes = assembly.GetTypes()
-            .Where(t => t.IsSubclassOf(typeof(DarkToolWindow)));
-
-        // 筛选出可以被Activator.CreateInstance创建的类型
-        IEnumerable<Type> creatableTypes = darkToolWindowTypes
-            .Where(UIUtils.CanInstantiate);
-
-        return creatableTypes;
-    }
-
     private void darkMenuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e) {
 
     }
+    private void closeAllWindowMenuItem_Click(object sender, EventArgs e) {
+        ToolWindows.ForEach(WorkingPanel.RemoveContent);
+        ToolWindows.Clear();
+    }
+    #endregion
 }

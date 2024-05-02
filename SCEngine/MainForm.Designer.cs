@@ -28,8 +28,10 @@ partial class MainForm {
         darkMenuStrip1 = new DarkUI.Controls.DarkMenuStrip();
         游戏ToolStripMenuItem = new ToolStripMenuItem();
         退出ToolStripMenuItem = new ToolStripMenuItem();
-        窗口ToolStripMenuItem = new ToolStripMenuItem();
+        视图ToolStripMenuItem = new ToolStripMenuItem();
         添加ToolStripMenuItem = new ToolStripMenuItem();
+        toolStripSeparator1 = new ToolStripSeparator();
+        closeAllWindowMenuItem = new ToolStripMenuItem();
         darkMenuStrip1.SuspendLayout();
         SuspendLayout();
         // 
@@ -48,7 +50,7 @@ partial class MainForm {
         darkMenuStrip1.BackColor = Color.FromArgb(60, 63, 65);
         darkMenuStrip1.ForeColor = Color.FromArgb(220, 220, 220);
         darkMenuStrip1.ImageScalingSize = new Size(20, 20);
-        darkMenuStrip1.Items.AddRange(new ToolStripItem[] { 游戏ToolStripMenuItem, 窗口ToolStripMenuItem });
+        darkMenuStrip1.Items.AddRange(new ToolStripItem[] { 游戏ToolStripMenuItem, 视图ToolStripMenuItem });
         darkMenuStrip1.Location = new Point(0, 0);
         darkMenuStrip1.Name = "darkMenuStrip1";
         darkMenuStrip1.Padding = new Padding(3, 2, 0, 2);
@@ -75,22 +77,39 @@ partial class MainForm {
         退出ToolStripMenuItem.Text = "退出";
         退出ToolStripMenuItem.Click += 退出ToolStripMenuItem_Click;
         // 
-        // 窗口ToolStripMenuItem
+        // 视图ToolStripMenuItem
         // 
-        窗口ToolStripMenuItem.BackColor = Color.FromArgb(60, 63, 65);
-        窗口ToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { 添加ToolStripMenuItem });
-        窗口ToolStripMenuItem.ForeColor = Color.FromArgb(220, 220, 220);
-        窗口ToolStripMenuItem.Name = "窗口ToolStripMenuItem";
-        窗口ToolStripMenuItem.Size = new Size(53, 24);
-        窗口ToolStripMenuItem.Text = "窗口";
+        视图ToolStripMenuItem.BackColor = Color.FromArgb(60, 63, 65);
+        视图ToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { 添加ToolStripMenuItem, toolStripSeparator1, closeAllWindowMenuItem });
+        视图ToolStripMenuItem.ForeColor = Color.FromArgb(220, 220, 220);
+        视图ToolStripMenuItem.Name = "视图ToolStripMenuItem";
+        视图ToolStripMenuItem.Size = new Size(53, 24);
+        视图ToolStripMenuItem.Text = "视图";
         // 
         // 添加ToolStripMenuItem
         // 
         添加ToolStripMenuItem.BackColor = Color.FromArgb(60, 63, 65);
         添加ToolStripMenuItem.ForeColor = Color.FromArgb(220, 220, 220);
         添加ToolStripMenuItem.Name = "添加ToolStripMenuItem";
-        添加ToolStripMenuItem.Size = new Size(122, 26);
-        添加ToolStripMenuItem.Text = "添加";
+        添加ToolStripMenuItem.Size = new Size(224, 26);
+        添加ToolStripMenuItem.Text = "添加...";
+        // 
+        // toolStripSeparator1
+        // 
+        toolStripSeparator1.BackColor = Color.FromArgb(60, 63, 65);
+        toolStripSeparator1.ForeColor = Color.FromArgb(220, 220, 220);
+        toolStripSeparator1.Margin = new Padding(0, 0, 0, 1);
+        toolStripSeparator1.Name = "toolStripSeparator1";
+        toolStripSeparator1.Size = new Size(221, 6);
+        // 
+        // closeAllWindowMenuItem
+        // 
+        closeAllWindowMenuItem.BackColor = Color.FromArgb(60, 63, 65);
+        closeAllWindowMenuItem.ForeColor = Color.FromArgb(220, 220, 220);
+        closeAllWindowMenuItem.Name = "closeAllWindowMenuItem";
+        closeAllWindowMenuItem.Size = new Size(224, 26);
+        closeAllWindowMenuItem.Text = "关闭所有窗口";
+        closeAllWindowMenuItem.Click += closeAllWindowMenuItem_Click;
         // 
         // MainForm
         // 
@@ -114,7 +133,9 @@ partial class MainForm {
     private DarkUI.Docking.DarkDockPanel WorkingPanel;
     private DarkUI.Controls.DarkMenuStrip darkMenuStrip1;
     private ToolStripMenuItem 游戏ToolStripMenuItem;
-    private ToolStripMenuItem 窗口ToolStripMenuItem;
+    private ToolStripMenuItem 视图ToolStripMenuItem;
     private ToolStripMenuItem 添加ToolStripMenuItem;
     private ToolStripMenuItem 退出ToolStripMenuItem;
+    private ToolStripSeparator toolStripSeparator1;
+    private ToolStripMenuItem closeAllWindowMenuItem;
 }
