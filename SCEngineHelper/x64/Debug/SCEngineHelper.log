@@ -1,2 +1,5 @@
 ﻿  WindowHandlerUtils.cpp
-D:\CS Project\SCEngine\SCEngineHelper\WindowHandlerUtils.cpp(73,1): error C1010: 在查找预编译头时遇到意外的文件结尾。是否忘记了向源中添加“#include "pch.h"”?
+  .NETCoreApp,Version=v8.0.AssemblyAttributes.cpp
+  正在生成代码...
+  WindowHandlerUtils.obj : 遇到了 MSIL 模块；对 MSIL 禁用了增量链接；正在执行完全链接
+  SCEngineHelper.vcxproj -> D:\CS Project\SCEngine\x64\Debug\SCEngineHelper.dll
