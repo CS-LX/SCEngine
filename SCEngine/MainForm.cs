@@ -106,6 +106,9 @@ public partial class MainForm : DarkForm {
     private void 退出ToolStripMenuItem_Click(object sender, EventArgs e) {
         Application.Exit();
     }
+    private void MainForm_FormClosing(object sender, FormClosingEventArgs e) {
+        Engine.Window.Close();
+    }
 
     private void darkMenuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e) {
 

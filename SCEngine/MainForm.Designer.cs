@@ -136,7 +136,7 @@ partial class MainForm {
         布局ToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { 左右分居ToolStripMenuItem, 上下分居ToolStripMenuItem });
         布局ToolStripMenuItem.ForeColor = Color.FromArgb(220, 220, 220);
         布局ToolStripMenuItem.Name = "布局ToolStripMenuItem";
-        布局ToolStripMenuItem.Size = new Size(224, 26);
+        布局ToolStripMenuItem.Size = new Size(122, 26);
         布局ToolStripMenuItem.Text = "布局";
         // 
         // 左右分居ToolStripMenuItem
@@ -144,7 +144,7 @@ partial class MainForm {
         左右分居ToolStripMenuItem.BackColor = Color.FromArgb(60, 63, 65);
         左右分居ToolStripMenuItem.ForeColor = Color.FromArgb(220, 220, 220);
         左右分居ToolStripMenuItem.Name = "左右分居ToolStripMenuItem";
-        左右分居ToolStripMenuItem.Size = new Size(224, 26);
+        左右分居ToolStripMenuItem.Size = new Size(152, 26);
         左右分居ToolStripMenuItem.Text = "水平分局";
         左右分居ToolStripMenuItem.Click += 左右分居ToolStripMenuItem_Click;
         // 
@@ -153,7 +153,7 @@ partial class MainForm {
         上下分居ToolStripMenuItem.BackColor = Color.FromArgb(60, 63, 65);
         上下分居ToolStripMenuItem.ForeColor = Color.FromArgb(220, 220, 220);
         上下分居ToolStripMenuItem.Name = "上下分居ToolStripMenuItem";
-        上下分居ToolStripMenuItem.Size = new Size(224, 26);
+        上下分居ToolStripMenuItem.Size = new Size(152, 26);
         上下分居ToolStripMenuItem.Text = "垂直分居";
         上下分居ToolStripMenuItem.Click += 上下分居ToolStripMenuItem_Click;
         // 
@@ -193,6 +193,7 @@ partial class MainForm {
         MainMenuStrip = darkMenuStrip1;
         Name = "MainForm";
         Text = "SCEngine";
+        FormClosing += MainForm_FormClosing;
         FormClosed += MainForm_FormClosed;
         darkMenuStrip1.ResumeLayout(false);
         darkMenuStrip1.PerformLayout();

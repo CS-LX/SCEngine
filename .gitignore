@@ -6,3 +6,7 @@ riderModule.iml
 /.vs
 /x64/Debug
 /SCEngineHelper/x64/Release
+/SCEngineHelper/x64/Debug/SCEngineHelper.log
+/SCEngineHelper/x64/Debug/SCEngineHelper.sourcelink.json
+/SCEngineHelper/x64/Debug/vc143.pdb
+/SCEngineHelper/x64/Debug/WindowHandlerUtils.obj

@@ -61,8 +61,10 @@ namespace SCEngine
             SetParent(hwndToInsert, hwndParent);
 
             // 设置子窗口样式为无边框
+            ShowWindow(hwndToInsert, 3);
             LONG_PTR style = GetWindowLongPtr(hwndToInsert, GWL_STYLE);
-            SetWindowLongPtr(hwndToInsert, GWL_STYLE, style & ~WS_OVERLAPPEDWINDOW);
+            SetWindowLongPtr(hwndToInsert, GWL_STYLE, WS_VISIBLE);
+
 
             // 调整子窗口的位置和大小以适应父窗口
             RECT rcClient;
