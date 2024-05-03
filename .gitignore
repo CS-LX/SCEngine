@@ -4,5 +4,4 @@ obj/
 riderModule.iml
 /_ReSharper.Caches/
 /.vs
-/x64
-/SCEngineHelper/x64
+/x64/Debug
