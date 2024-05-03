@@ -22,7 +22,7 @@ namespace SCEngine {
                 for (int j = 0; j < 4; j++) {
                     DarkTextBox darkTextBox = new DarkTextBox { Name = $"M{i}{j}", Dock = DockStyle.Fill };
                     matrixInputs[i * 4 + j] = darkTextBox;
-                    darkTextBox.TextChanged += DarkTextBox_TextChanged;
+                    darkTextBox.Validating += DarkTextBox_Validating;
                     matrixPanel.Controls.Add(darkTextBox);
                     matrixPanel.SetColumn(darkTextBox, j);
                     matrixPanel.SetRow(darkTextBox, i);
@@ -30,11 +30,11 @@ namespace SCEngine {
             }
         }
 
-        private void DarkTextBox_TextChanged(object? sender, EventArgs e) {
+        private void DarkTextBox_Validating(object? sender, EventArgs e) {
             if (sender is DarkTextBox textBox) {
                 if (!float.TryParse(textBox.Text, out _)) {
                     DarkMessageBox.ShowError("请输入有效的浮点数！", "提示");
-                    textBox.Text = "0.0"; // 恢复默认值
+                    textBox.Focus();
                 }
             }
         }
