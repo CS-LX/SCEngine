@@ -1,5 +1,8 @@
 ﻿  WindowHandlerUtils.cpp
-  .NETCoreApp,Version=v8.0.AssemblyAttributes.cpp
-  正在生成代码...
+D:\CS Project\SCEngine\SCEngineHelper\WindowHandlerUtils.cpp(1,1): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+D:\CS Project\SCEngine\SCEngineHelper\WindowHandlerUtils.cpp(58,33): warning C4312: “类型强制转换”: 从“int”转换到更大的“HWND”
+D:\CS Project\SCEngine\SCEngineHelper\WindowHandlerUtils.cpp(59,31): warning C4312: “类型强制转换”: 从“int”转换到更大的“HWND”
+D:\CS Project\SCEngine\SCEngineHelper\WindowHandlerUtils.cpp(75,33): warning C4312: “类型强制转换”: 从“int”转换到更大的“HWND”
+D:\CS Project\SCEngine\SCEngineHelper\WindowHandlerUtils.cpp(76,31): warning C4312: “类型强制转换”: 从“int”转换到更大的“HWND”
   WindowHandlerUtils.obj : 遇到了 MSIL 模块；对 MSIL 禁用了增量链接；正在执行完全链接
   SCEngineHelper.vcxproj -> D:\CS Project\SCEngine\x64\Debug\SCEngineHelper.dll

@@ -18,5 +18,8 @@
     <ClCompile Include="WindowHandlerUtils.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="WindowMethodUtils.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

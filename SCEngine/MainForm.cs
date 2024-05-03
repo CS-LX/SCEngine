@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Reflection;
 using DarkUI;
 using DarkUI.Controls;
@@ -15,6 +16,27 @@ public partial class MainForm : DarkForm {
         { typeof(StaticClassesWindow), "静态类" },
         { typeof(WorldWidgetWindow), "界面编辑器-玩家呈现" }
     };
+
+    private static IntPtr gameHandle;
+    public static IntPtr GameHandle {
+        get {
+            if (gameHandle == IntPtr.Zero && Engine.Window.m_gameWindow != null) {
+                gameHandle = (IntPtr)WindowMethodUtils.GetParentS(Engine.Window.m_gameWindow.WindowInfo.Handle);
+            }
+            return gameHandle;
+        }
+    }
+    private static IntPtr engineHandle;
+    public static IntPtr EngineHandle {
+        get {
+            if (engineHandle == IntPtr.Zero) {
+                engineHandle = (IntPtr)WindowHandlerUtils.GetWindowsHandle(Process.GetCurrentProcess());
+            }
+            return engineHandle;
+        }
+    }
+    public IntPtr GammingPanelHandle => GammingPanel.Handle;
+
     #endregion
 
     #region 方法
@@ -61,6 +83,11 @@ public partial class MainForm : DarkForm {
             ).ToArray();
         添加ToolStripMenuItem.DropDownItems.AddRange(windowItems);
         添加ToolStripMenuItem.DropDownItemClicked += 添加ToolStripMenuItem_DropDownItemClicked;
+
+        //设置布局
+        while (GameHandle == IntPtr.Zero) {
+        }
+        WindowHandlerUtils.InsertWindow(GameHandle, GammingPanelHandle);
     }
 
     private void 添加ToolStripMenuItem_DropDownItemClicked(object? sender, ToolStripItemClickedEventArgs e) {
@@ -83,9 +110,22 @@ public partial class MainForm : DarkForm {
     private void darkMenuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e) {
 
     }
+
     private void closeAllWindowMenuItem_Click(object sender, EventArgs e) {
         ToolWindows.ForEach(WorkingPanel.RemoveContent);
         ToolWindows.Clear();
+    }
+
+    private void GammingPanel_SizeChanged(object sender, EventArgs e) {
+        WindowHandlerUtils.SetChildWindowPos(GameHandle, GammingPanelHandle);
+    }
+
+    private void 左右分居ToolStripMenuItem_Click(object sender, EventArgs e) {
+        workGameSplitContainer.Orientation = Orientation.Vertical;
+    }
+
+    private void 上下分居ToolStripMenuItem_Click(object sender, EventArgs e) {
+        workGameSplitContainer.Orientation = Orientation.Horizontal;
     }
     #endregion
 }
