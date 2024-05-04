@@ -42,6 +42,7 @@ namespace SCEngine {
             darkSectionPanel1 = new DarkSectionPanel();
             propertriesGrid = new PropertyGridSC();
             updateControlsTimer = new System.Windows.Forms.Timer(components);
+            positionSetButton = new DarkButton();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
             splitContainer1.Panel1.SuspendLayout();
             splitContainer1.Panel2.SuspendLayout();
@@ -100,6 +101,7 @@ namespace SCEngine {
             // 
             // splitContainer2.Panel2
             // 
+            splitContainer2.Panel2.Controls.Add(positionSetButton);
             splitContainer2.Panel2.Controls.Add(viewXmlButton);
             splitContainer2.Panel2.Controls.Add(importButton);
             splitContainer2.Panel2.Controls.Add(newWidgetButton);
@@ -243,6 +245,18 @@ namespace SCEngine {
             // 
             updateControlsTimer.Tick += updateControlsTimer_Tick;
             // 
+            // positionSetButton
+            // 
+            positionSetButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            positionSetButton.CenterIcon = Properties.Resources.Op_Move;
+            positionSetButton.CenterIconScale = 0.55F;
+            positionSetButton.Location = new Point(79, 502);
+            positionSetButton.Name = "positionSetButton";
+            positionSetButton.Padding = new Padding(5);
+            positionSetButton.Size = new Size(32, 32);
+            positionSetButton.TabIndex = 7;
+            positionSetButton.Click += positionSetButton_Click;
+            // 
             // WorldWidgetWindow
             // 
             AutoScaleDimensions = new SizeF(9F, 20F);
@@ -282,5 +296,6 @@ namespace SCEngine {
         private DarkButton importButton;
         private DarkButton viewXmlButton;
         private System.Windows.Forms.Timer updateControlsTimer;
+        private DarkButton positionSetButton;
     }
 }

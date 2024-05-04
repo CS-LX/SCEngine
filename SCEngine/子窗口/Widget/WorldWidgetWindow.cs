@@ -70,6 +70,7 @@ namespace SCEngine {
 
             enableXmlExportButton.Enabled = widgetView.SelectedNodes.FirstOrDefault()?.Tag != null;
             removeWidgetButton.Enabled = widgetView.SelectedNodes.FirstOrDefault()?.Tag != null;
+            positionSetButton.Enabled = widgetView.SelectedNodes.FirstOrDefault()?.Tag != null;
 
             newWidgetButton.Enabled = componentGui != null;
             importButton.Enabled = componentGui != null;
@@ -371,6 +372,22 @@ namespace SCEngine {
             }
             catch (Exception ex) {
                 DarkMessageBox.ShowError($"导入失败\r\n\r\n错误如下：\r\n{ex}", "");
+            }
+        }
+        private void positionSetButton_Click(object sender, EventArgs e) {
+            object? selectedObject = widgetView.SelectedNodes.FirstOrDefault()?.Tag ?? null;
+            if (selectedObject != null && selectedObject is Widget selectedWidget && currentWidget is CanvasWidget canvasWidget) {
+                if (!canvasWidget.m_positions.ContainsKey(selectedWidget)) {
+                    Vector2 position = Vector2.Zero;
+                    canvasWidget.m_positions.Add(selectedWidget, position);
+                }
+                Vector2 previousPos = canvasWidget.m_positions[selectedWidget];
+                WidgetPositionSetDialog positionSetDialog = new WidgetPositionSetDialog(canvasWidget.m_positions[selectedWidget], (Vector2 pos) => {
+                    canvasWidget.m_positions[selectedWidget] = pos;
+                });
+                if (positionSetDialog.ShowDialog() == DialogResult.Cancel) {//取消，还原之前位置
+                    canvasWidget.m_positions[selectedWidget] = previousPos;
+                }
             }
         }
         #endregion

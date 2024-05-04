@@ -25,6 +25,9 @@
     <Compile Update="子窗口\Widget\WidgetExportXmlDialog.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="子窗口\Widget\WidgetPositionSetDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="子窗口\Widget\WorldWidgetWindow.cs">
       <SubType>UserControl</SubType>
     </Compile>
