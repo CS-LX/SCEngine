@@ -21,7 +21,7 @@ public partial class MainForm : DarkForm {
     public static IntPtr GameHandle {
         get {
             if (gameHandle == IntPtr.Zero && Engine.Window.m_gameWindow != null) {
-                gameHandle = (IntPtr)WindowMethodUtils.GetParentS(Engine.Window.m_gameWindow.WindowInfo.Handle);
+                gameHandle = Engine.Window.m_gameWindow.WindowInfo.Handle;
             }
             return gameHandle;
         }
