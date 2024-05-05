@@ -13,7 +13,7 @@ using namespace msclr::interop;
 
 namespace SCEngine
 {
-    public ref class WindowMethodUtils//C++原生方法封装为C#
+    public ref class CPP//C++原生方法封装为C#
     {
     public:
         static IntPtr^ GetParentS(IntPtr^ window)

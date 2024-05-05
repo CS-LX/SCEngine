@@ -21,7 +21,12 @@ public partial class MainForm : DarkForm {
     public static IntPtr GameHandle {
         get {
             if (gameHandle == IntPtr.Zero && Engine.Window.m_gameWindow != null) {
-                gameHandle = Engine.Window.m_gameWindow.WindowInfo.Handle;
+                if (ModsManager.APIVersion.Contains("1.7")) {
+                    gameHandle = Engine.Window.m_gameWindow.WindowInfo.Handle;
+                }
+                else {
+                    gameHandle = (IntPtr)CPP.GetParentS(Engine.Window.m_gameWindow.WindowInfo.Handle);
+                }
             }
             return gameHandle;
         }

@@ -20,7 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WindowHandlerUtils.cpp" />
-    <ClCompile Include="WindowMethodUtils.cpp" />
+    <ClCompile Include="CPP.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
