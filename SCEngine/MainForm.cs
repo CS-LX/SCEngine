@@ -22,6 +22,9 @@ public partial class MainForm : DarkForm {
         get {
             if (gameHandle == IntPtr.Zero && Engine.Window.m_gameWindow != null) {
                 if (ModsManager.APIVersion.Contains("1.7")) {
+                    //如果内置SC分支处于这个更改，窗口会出bug，因为这时版本是1.7但是窗口为发生父级关系改变
+                    //                    ID 作者  日期 消息
+                    //611329603eb77ae3e1e5951c6de2b825e9bb17f7 把红色赋予黑海_🔴 < heihaixiaonanliang@qq.com > 2024 / 4 / 23 9:55:09 + 00:00    修复问题，修改版本号为1.70A 此分支已修改为1.7，1.6将在另一分支
                     gameHandle = Engine.Window.m_gameWindow.WindowInfo.Handle;
                 }
                 else {
