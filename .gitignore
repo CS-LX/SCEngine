@@ -19,3 +19,6 @@ riderModule.iml
 /SCEngineHelper/x64/Debug/SCEngineHelper.tlog/link.secondary.1.tlog
 /SCEngineHelper/x64/Debug/SCEngineHelper.tlog/link.write.1.tlog
 /SCEngineHelper/x64/Debug/CPP.obj
+/SCEngineHelper/x64/Debug/.NETCoreApp,Version=v8.0.AssemblyAttributes.obj
+/SCEngineHelper/x64/Debug/SCEngineHelper.Build.CppClean.log
+/SCEngineHelper/x64/Debug/WindowMethodUtils.obj
