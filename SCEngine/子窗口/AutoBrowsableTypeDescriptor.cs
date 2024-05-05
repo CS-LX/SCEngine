@@ -16,33 +16,40 @@ namespace SCEngine {
         private readonly Dictionary<string, PropertyDescriptor> _propertyDescriptors;
         private readonly Dictionary<string, PropertyDescriptor> _fieldDescriptors;
 
+        private readonly Dictionary<string, string>? _descriptions;
+
         public readonly object _instance;
-        public AutoBrowsableTypeDescriptor(ICustomTypeDescriptor parent, Type type, object instance) : base(parent) {
+        public AutoBrowsableTypeDescriptor(ICustomTypeDescriptor parent, Type type, object instance, Dictionary<string, string>? descriptions) : base(parent) {
             _propertyDescriptors = new Dictionary<string, PropertyDescriptor>();
             _fieldDescriptors = new Dictionary<string, PropertyDescriptor>();
             _instance = instance;
+            _descriptions = descriptions;
             // 获取类的所有属性
             var properties = type.GetProperties();
 
             // 创建属性的 PropertyDescriptor 集合
             foreach (var prop in properties) {
+                string propDesc = string.Empty;
+                if (_descriptions != null) {
+                    _descriptions.TryGetValue(prop.Name, out propDesc);
+                }
                 if (prop.PropertyType == typeof(Vector3)) {
-                    _propertyDescriptors[prop.Name] = new PropertyPropertyDescriptor(prop, [new TypeConverterAttribute(typeof(Vector3TypeConverter))]);
+                    _propertyDescriptors[prop.Name] = new PropertyPropertyDescriptor(prop, [new TypeConverterAttribute(typeof(Vector3TypeConverter)), new DescriptionAttribute(propDesc)]);
                 }
                 else if (prop.PropertyType == typeof(Quaternion)) {
-                    _propertyDescriptors[prop.Name] = new PropertyPropertyDescriptor(prop, [new TypeConverterAttribute(typeof(QuaternionTypeConverter))]);
+                    _propertyDescriptors[prop.Name] = new PropertyPropertyDescriptor(prop, [new TypeConverterAttribute(typeof(QuaternionTypeConverter)), new DescriptionAttribute(propDesc)]);
                 }
                 else if (prop.PropertyType == typeof(Vector2)) {
-                    _propertyDescriptors[prop.Name] = new PropertyPropertyDescriptor(prop, [new TypeConverterAttribute(typeof(Vector2TypeConverter))]);
+                    _propertyDescriptors[prop.Name] = new PropertyPropertyDescriptor(prop, [new TypeConverterAttribute(typeof(Vector2TypeConverter)), new DescriptionAttribute(propDesc)]);
                 }
                 else if (prop.PropertyType == typeof(Color)) {
-                    _propertyDescriptors[prop.Name] = new PropertyPropertyDescriptor(prop, [new EditorAttribute(typeof(ColorExEditor), typeof(UITypeEditor))]);
+                    _propertyDescriptors[prop.Name] = new PropertyPropertyDescriptor(prop, [new EditorAttribute(typeof(ColorExEditor), typeof(UITypeEditor)), new DescriptionAttribute(propDesc)]);
                 }
                 else if (prop.PropertyType == typeof(Matrix)) {
-                    _propertyDescriptors[prop.Name] = new PropertyPropertyDescriptor(prop, [new EditorAttribute(typeof(MatrixEditor), typeof(UITypeEditor))]);
+                    _propertyDescriptors[prop.Name] = new PropertyPropertyDescriptor(prop, [new EditorAttribute(typeof(MatrixEditor), typeof(UITypeEditor)), new DescriptionAttribute(propDesc)]);
                 }
                 else {
-                    _propertyDescriptors[prop.Name] = new PropertyPropertyDescriptor(prop);
+                    _propertyDescriptors[prop.Name] = new PropertyPropertyDescriptor(prop, [new DescriptionAttribute(propDesc)]);
                 }
             }
 
@@ -51,23 +58,27 @@ namespace SCEngine {
 
             // 创建字段的 PropertyDescriptor 集合
             foreach (var field in fields) {
+                string fieldDesc = string.Empty;
+                if (_descriptions != null) {
+                    _descriptions.TryGetValue(field.Name, out fieldDesc);
+                }
                 if (field.FieldType == typeof(Vector3)) {
-                    _fieldDescriptors[field.Name] = new FieldPropertyDescriptor(field, [new TypeConverterAttribute(typeof(Vector3TypeConverter))]);
+                    _fieldDescriptors[field.Name] = new FieldPropertyDescriptor(field, [new TypeConverterAttribute(typeof(Vector3TypeConverter)), new DescriptionAttribute(fieldDesc)]);
                 }
                 else if (field.FieldType == typeof(Quaternion)) {
-                    _fieldDescriptors[field.Name] = new FieldPropertyDescriptor(field, [new TypeConverterAttribute(typeof(QuaternionTypeConverter))]);
+                    _fieldDescriptors[field.Name] = new FieldPropertyDescriptor(field, [new TypeConverterAttribute(typeof(QuaternionTypeConverter)), new DescriptionAttribute(fieldDesc)]);
                 }
                 else if (field.FieldType == typeof(Vector2)) {
-                    _fieldDescriptors[field.Name] = new FieldPropertyDescriptor(field, [new TypeConverterAttribute(typeof(Vector2TypeConverter))]);
+                    _fieldDescriptors[field.Name] = new FieldPropertyDescriptor(field, [new TypeConverterAttribute(typeof(Vector2TypeConverter)), new DescriptionAttribute(fieldDesc)]);
                 }
                 else if (field.FieldType == typeof(Color)) {
-                    _fieldDescriptors[field.Name] = new FieldPropertyDescriptor(field, [new EditorAttribute(typeof(ColorExEditor), typeof(UITypeEditor))]);
+                    _fieldDescriptors[field.Name] = new FieldPropertyDescriptor(field, [new EditorAttribute(typeof(ColorExEditor), typeof(UITypeEditor)), new DescriptionAttribute(fieldDesc)]);
                 }
                 else if (field.FieldType == typeof(Matrix)) {
-                    _fieldDescriptors[field.Name] = new FieldPropertyDescriptor(field, [new EditorAttribute(typeof(MatrixEditor), typeof(UITypeEditor))]);
+                    _fieldDescriptors[field.Name] = new FieldPropertyDescriptor(field, [new EditorAttribute(typeof(MatrixEditor), typeof(UITypeEditor)), new DescriptionAttribute(fieldDesc)]);
                 }
                 else {
-                    _fieldDescriptors[field.Name] = new FieldPropertyDescriptor(field);
+                    _fieldDescriptors[field.Name] = new FieldPropertyDescriptor(field, [new DescriptionAttribute(fieldDesc)]);
                 }
             }
         }

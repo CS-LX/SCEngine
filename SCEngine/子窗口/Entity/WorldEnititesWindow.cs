@@ -115,7 +115,7 @@ namespace SCEngine {
             object? selectedObject = entitiesView.SelectedNodes.FirstOrDefault()?.Tag ?? null;
             if (selectedObject != null) {
                 // 使用自定义的 TypeConverter
-                var typeDescriptor = new AutoBrowsableTypeDescriptor(TypeDescriptor.GetProvider(selectedObject).GetTypeDescriptor(selectedObject), selectedObject.GetType(), selectedObject);
+                var typeDescriptor = new AutoBrowsableTypeDescriptor(TypeDescriptor.GetProvider(selectedObject).GetTypeDescriptor(selectedObject), selectedObject.GetType(), selectedObject, PropertyDescriptions);
 
                 propertriesGrid.SelectedObject = typeDescriptor;
             }

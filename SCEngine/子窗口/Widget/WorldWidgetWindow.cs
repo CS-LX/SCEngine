@@ -247,7 +247,7 @@ namespace SCEngine {
             object? selectedObject = widgetView.SelectedNodes.FirstOrDefault()?.Tag ?? null;
             if (selectedObject != null) {
                 // 使用自定义的 TypeConverter
-                var typeDescriptor = new AutoBrowsableTypeDescriptor(TypeDescriptor.GetProvider(selectedObject).GetTypeDescriptor(selectedObject), selectedObject.GetType(), selectedObject);
+                var typeDescriptor = new AutoBrowsableTypeDescriptor(TypeDescriptor.GetProvider(selectedObject).GetTypeDescriptor(selectedObject), selectedObject.GetType(), selectedObject, null);
 
                 propertriesGrid.SelectedObject = typeDescriptor;
             }
