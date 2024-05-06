@@ -50,6 +50,7 @@ namespace SCEngine {
             ContainerWidget currentWidget = componentGui.ModalPanelWidget is ContainerWidget widget ? widget : null;
             if (currentWidget == this.currentWidget) return;
             this.currentWidget = currentWidget;
+            widgetView.SelectedNodes.Clear();
             widgetView.Nodes.Clear();
             propertriesGrid.SelectedObject = null;
             if (currentWidget == null) return;
@@ -68,9 +69,9 @@ namespace SCEngine {
             viewXmlButton.Enabled = currentWidget != null;
             exportXmlButton.Enabled = currentWidget != null;
 
-            enableXmlExportButton.Enabled = widgetView.SelectedNodes.FirstOrDefault()?.Tag != null;
-            removeWidgetButton.Enabled = widgetView.SelectedNodes.FirstOrDefault()?.Tag != null;
-            positionSetButton.Enabled = widgetView.SelectedNodes.FirstOrDefault()?.Tag != null;
+            enableXmlExportButton.Enabled = currentWidget != null && widgetView.SelectedNodes.FirstOrDefault()?.Tag != null;
+            removeWidgetButton.Enabled = currentWidget != null && widgetView.SelectedNodes.FirstOrDefault()?.Tag != null;
+            positionSetButton.Enabled = currentWidget != null && widgetView.SelectedNodes.FirstOrDefault()?.Tag != null;
 
             newWidgetButton.Enabled = componentGui != null;
             importButton.Enabled = componentGui != null;

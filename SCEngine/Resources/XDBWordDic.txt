@@ -480,7 +480,7 @@ WalkSpeed==行走速度
 WalkSpeedWhenTurning==步行速度当转动时
 Water==水
 WaterBlockBehavior==水方块行为
-WaterDrag==水拖拽
+WaterDrag==水中阻力
 WaterPlantBlockBehavior==水中植物方块行为
 WaterSwayAngle==生物在水中时，视角的上下摇摆角度
 WaterTurnSpeed==生物在水中的自动旋转速度，可以理解为被水流推着转的速度
