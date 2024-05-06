@@ -482,11 +482,11 @@ Water==水
 WaterBlockBehavior==水方块行为
 WaterDrag==水拖拽
 WaterPlantBlockBehavior==水中植物方块行为
-WaterSwayAngle==水中的摇摆角度
-WaterTurnSpeed==水的旋转速度
+WaterSwayAngle==生物在水中时，视角的上下摇摆角度
+WaterTurnSpeed==生物在水中的自动旋转速度，可以理解为被水流推着转的速度
 Weather==天气
-WeatherEndTime==天气结束时间
-WeatherStartTime==天气开启时间
+WeatherEndTime==天气(下雨)结束时间
+WeatherStartTime==天气(下雨)开启时间
 Werewolf==狼人
 Wetness==湿度
 WhistleBlockBehavior==哨子方块行为
