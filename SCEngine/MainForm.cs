@@ -138,5 +138,10 @@ public partial class MainForm : DarkForm {
     private void 上下分居ToolStripMenuItem_Click(object sender, EventArgs e) {
         workGameSplitContainer.Orientation = Orientation.Horizontal;
     }
+
+    private void MainForm_Load(object sender, EventArgs e) {
+        while (ModsManager.Dlls.Count <= 0) { }
+        Program.DllsLoaded.Invoke(ModsManager.Dlls);
+    }
     #endregion
 }

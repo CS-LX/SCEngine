@@ -1,9 +1,13 @@
+using System.Reflection;
+
 namespace SCEngine;
 
 public static class Program {
     public static Thread SCThread;
     public static Thread UpdateThread;
     public static bool GameStarted = false;
+
+    public static Action<Dictionary<string, Assembly>> DllsLoaded = (dic) => { };
     /// <summary>
     ///  The main entry point for the application.
     /// </summary>

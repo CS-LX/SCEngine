@@ -196,6 +196,7 @@ partial class MainForm {
         WindowState = FormWindowState.Maximized;
         FormClosing += MainForm_FormClosing;
         FormClosed += MainForm_FormClosed;
+        Load += MainForm_Load;
         darkMenuStrip1.ResumeLayout(false);
         darkMenuStrip1.PerformLayout();
         workGameSplitContainer.Panel1.ResumeLayout(false);

@@ -23,6 +23,10 @@ namespace SCEngine {
         public Dictionary<string, Assembly> Assemblies => ModsManager.Dlls;
         public StaticClassesWindow() {
             InitializeComponent();
+            Program.DllsLoaded += (dlls) => {
+                UpdateAssemblies();
+                UpdateClasses(dlls.FirstOrDefault().Value);
+            };
         }
 
         public void UpdateAssemblies() {
@@ -58,10 +62,6 @@ namespace SCEngine {
         }
 
         private void WorldSubsystemsWindow_Load(object sender, EventArgs e) {
-            while (Assemblies.Count == 0) {
-            }
-            UpdateAssemblies();
-            UpdateClasses(Assemblies.FirstOrDefault().Value);
         }
 
         private void searchButton_Click(object sender, EventArgs e) {//搜索功能
