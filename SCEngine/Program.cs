@@ -6,6 +6,7 @@ public static class Program {
     public static Thread SCThread;
     public static Thread UpdateThread;
     public static bool GameStarted = false;
+    public static MainForm MainForm;
 
     public static Action<Dictionary<string, Assembly>> DllsLoaded = (dic) => { };
     /// <summary>
@@ -24,12 +25,12 @@ public static class Program {
         UpdateThread = new Thread(Update);
         UpdateThread.Start();
 
-        Application.Run(new MainForm());
+        MainForm = new MainForm();
+        Application.Run(MainForm);
     }
 
     static void Update() {
         while (GameStarted == true && SCThread.IsAlive) {
-
         }
         //游戏关闭了就退出
         Application.Exit();

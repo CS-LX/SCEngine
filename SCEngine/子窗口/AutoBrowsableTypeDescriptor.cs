@@ -54,6 +54,9 @@ namespace SCEngine {
                     case Type a when a == typeof(Matrix):
                         attrs.Add(new EditorAttribute(typeof(MatrixEditor), typeof(UITypeEditor)));
                         break;
+                    case Type a when a == typeof(TemplatesDatabase.ValuesDictionary):
+                        attrs.Add(new EditorAttribute(typeof(ValuesDictionaryEditor), typeof(UITypeEditor)));
+                        break;
                 }
 
                 _propertyDescriptors[prop.Name] = new PropertyPropertyDescriptor(prop, attrs.ToArray());
@@ -88,6 +91,9 @@ namespace SCEngine {
                         break;
                     case Type a when a == typeof(Matrix):
                         attrs.Add(new EditorAttribute(typeof(MatrixEditor), typeof(UITypeEditor)));
+                        break;
+                    case Type a when a == typeof(TemplatesDatabase.ValuesDictionary):
+                        attrs.Add(new EditorAttribute(typeof(ValuesDictionaryEditor), typeof(UITypeEditor)));
                         break;
                 }
 
@@ -693,5 +699,20 @@ namespace SCEngine {
 
         public Matrix Value => GetValue();
         #endregion
+    }
+
+    public class ValuesDictionaryEditor : UITypeEditor {
+        public override UITypeEditorEditStyle GetEditStyle(ITypeDescriptorContext context) {
+            return UITypeEditorEditStyle.Modal;
+        }
+
+        public override object EditValue(ITypeDescriptorContext context, IServiceProvider provider, object value) {
+            InspectorWindow? inspectorWindow = Program.MainForm.FindSubwindow<InspectorWindow>();
+            if (inspectorWindow == null) {
+                inspectorWindow = (InspectorWindow?)Program.MainForm.AddSubwindow(new InspectorWindow(), DarkUI.Docking.DarkDockArea.Bottom);
+            }
+            inspectorWindow.DisplayObject = value;
+            return value;
+        }
     }
 }

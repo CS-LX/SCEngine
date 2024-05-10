@@ -14,13 +14,22 @@ using Component = GameEntitySystem.Component;
 
 namespace SCEngine {
     public partial class InspectorWindow : DarkToolWindow {
+        private object displayObject;
+        public object DisplayObject {
+            get => displayObject;
+            set {
+                propertriesGrid.SelectedObject = null;
+                displayObject = value;
+                if (displayObject != null) {
+                    // 使用自定义的 TypeConverter
+                    var typeDescriptor = new AutoBrowsableTypeDescriptor(TypeDescriptor.GetProvider(displayObject).GetTypeDescriptor(displayObject), displayObject.GetType(), displayObject, null);
+
+                    propertriesGrid.SelectedObject = typeDescriptor;
+                }
+            }
+        }
         public InspectorWindow() {
             InitializeComponent();
-        }
-
-        public void UpdateItems() {
-
-            DarkListItem darkListItem = new DarkListItem();
         }
     }
 }

@@ -9,10 +9,10 @@ namespace SCEngine;
 public partial class MainForm : DarkForm {
 
     #region 字段
-    public List<DarkToolWindow> ToolWindows = new();
     public static readonly Dictionary<Type, string> WindowNames = new Dictionary<Type, string>() {
         { typeof(WorldEnititesWindow), "世界实体" },
         { typeof(WorldSubsystemsWindow), "世界子系统" },
+        { typeof(InspectorWindow), "检查器" },
         { typeof(StaticClassesWindow), "静态类" },
         { typeof(WorldWidgetWindow), "界面编辑器-玩家呈现" }
     };
@@ -68,6 +68,21 @@ public partial class MainForm : DarkForm {
 
         return creatableTypes;
     }
+
+    public T? FindSubwindow<T>() where T : DarkToolWindow {
+        foreach (DarkToolWindow window in WorkingPanel.Content) {
+            if (window.GetType() == typeof(T)) {
+                return (T?)window;
+            }
+        }
+        return null;
+    }
+
+    public DarkToolWindow AddSubwindow(DarkToolWindow window, DarkDockArea dockArea) {
+        window.DefaultDockArea = dockArea;
+        WorkingPanel.AddContent(window);
+        return window;
+    }
     #endregion
 
     #region UI事件
@@ -76,10 +91,6 @@ public partial class MainForm : DarkForm {
         var subsystemsWindow = new WorldSubsystemsWindow();
         var staticClassesWindow = new StaticClassesWindow();
         var widgetWindow = new WorldWidgetWindow();
-        ToolWindows.Add(entitiesWindow);
-        ToolWindows.Add(subsystemsWindow);
-        ToolWindows.Add(staticClassesWindow);
-        ToolWindows.Add(widgetWindow);
         WorkingPanel.AddContent(entitiesWindow);
         WorkingPanel.AddContent(subsystemsWindow);
         WorkingPanel.AddContent(staticClassesWindow);
@@ -103,7 +114,6 @@ public partial class MainForm : DarkForm {
             case "OpenWindowItem":
                 DarkToolWindow newWindow = (DarkToolWindow)Activator.CreateInstance(e.ClickedItem?.Tag as Type);
                 WorkingPanel.AddContent(newWindow);
-                ToolWindows.Add(newWindow);
                 break;
         }
     }
@@ -123,8 +133,8 @@ public partial class MainForm : DarkForm {
     }
 
     private void closeAllWindowMenuItem_Click(object sender, EventArgs e) {
-        ToolWindows.ForEach(WorkingPanel.RemoveContent);
-        ToolWindows.Clear();
+        List<DarkDockContent> temp = new List<DarkDockContent>(WorkingPanel.Content);
+        temp.ForEach(WorkingPanel.RemoveContent);
     }
 
     private void GammingPanel_SizeChanged(object sender, EventArgs e) {
