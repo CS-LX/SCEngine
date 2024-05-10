@@ -21,10 +21,7 @@ namespace SCEngine {
                 propertriesGrid.SelectedObject = null;
                 displayObject = value;
                 if (displayObject != null) {
-                    // 使用自定义的 TypeConverter
-                    var typeDescriptor = new AutoBrowsableTypeDescriptor(TypeDescriptor.GetProvider(displayObject).GetTypeDescriptor(displayObject), displayObject.GetType(), displayObject, null);
-
-                    propertriesGrid.SelectedObject = typeDescriptor;
+                    propertriesGrid.SelectedObject = displayObject;
                 }
             }
         }
