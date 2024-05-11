@@ -727,6 +727,9 @@ namespace SCEngine {
                 int index = 0;
                 foreach (var item in dictionary) {
                     List<Attribute> attrs = [];
+                    if (item.Value.GetType() == typeof(TemplatesDatabase.ValuesDictionary)) {
+                        attrs.Add(new TypeConverterAttribute(typeof(ValuesDictionaryConverter)));
+                    }
                     propertyDescriptors[index++] = new KeyValuePairPropertyDescriptor(item, attrs.ToArray());
                 }
                 return new PropertyDescriptorCollection(propertyDescriptors);
