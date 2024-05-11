@@ -18,6 +18,11 @@ namespace SCEngine {
         private readonly Dictionary<string, PropertyDescriptor> _fieldDescriptors;
 
         private readonly Dictionary<string, string>? _descriptions;
+        private Type[] useECSTypes = [
+            typeof(GameEntitySystem.Subsystem),
+            typeof(GameEntitySystem.Component),
+            typeof(Game.PlayerData)
+            ];
 
         public readonly object _instance;
         public AutoBrowsableTypeDescriptor(ICustomTypeDescriptor parent, Type type, object instance, Dictionary<string, string>? descriptions) : base(parent) {
@@ -58,7 +63,7 @@ namespace SCEngine {
                     case Type a when a == typeof(TemplatesDatabase.ValuesDictionary):
                         attrs.Add(new TypeConverterAttribute(typeof(ValuesDictionaryConverter)));
                         break;
-                    case Type a when a.IsSubclassOf(typeof(GameEntitySystem.Component)) || a.IsSubclassOf(typeof(GameEntitySystem.Subsystem)):
+                    case Type a when useECSTypes.Any(type => type.IsAssignableFrom(a)):
                         attrs.Add(new EditorAttribute(typeof(ECSEditor), typeof(UITypeEditor)));
                         break;
                 }
@@ -99,7 +104,7 @@ namespace SCEngine {
                     case Type a when a == typeof(TemplatesDatabase.ValuesDictionary):
                         attrs.Add(new TypeConverterAttribute(typeof(ValuesDictionaryConverter)));
                         break;
-                    case Type a when a.IsSubclassOf(typeof(GameEntitySystem.Component)) || a.IsSubclassOf(typeof(GameEntitySystem.Subsystem)):
+                    case Type a when useECSTypes.Any(type => type.IsAssignableFrom(a)):
                         attrs.Add(new EditorAttribute(typeof(ECSEditor), typeof(UITypeEditor)));
                         break;
                 }
