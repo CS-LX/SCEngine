@@ -58,6 +58,9 @@ namespace SCEngine {
                     case Type a when a == typeof(TemplatesDatabase.ValuesDictionary):
                         attrs.Add(new TypeConverterAttribute(typeof(ValuesDictionaryConverter)));
                         break;
+                    case Type a when a.IsSubclassOf(typeof(GameEntitySystem.Component)) || a.IsSubclassOf(typeof(GameEntitySystem.Subsystem)):
+                        attrs.Add(new EditorAttribute(typeof(ECSEditor), typeof(UITypeEditor)));
+                        break;
                 }
 
                 _propertyDescriptors[prop.Name] = new PropertyPropertyDescriptor(prop, attrs.ToArray());
@@ -95,6 +98,9 @@ namespace SCEngine {
                         break;
                     case Type a when a == typeof(TemplatesDatabase.ValuesDictionary):
                         attrs.Add(new TypeConverterAttribute(typeof(ValuesDictionaryConverter)));
+                        break;
+                    case Type a when a.IsSubclassOf(typeof(GameEntitySystem.Component)) || a.IsSubclassOf(typeof(GameEntitySystem.Subsystem)):
+                        attrs.Add(new EditorAttribute(typeof(ECSEditor), typeof(UITypeEditor)));
                         break;
                 }
 
@@ -721,26 +727,6 @@ namespace SCEngine {
                 int index = 0;
                 foreach (var item in dictionary) {
                     List<Attribute> attrs = [];
-                    switch (item.Value.GetType()) {
-                        case Type a when a == typeof(Vector3):
-                            attrs.Add(new TypeConverterAttribute(typeof(Vector3TypeConverter)));
-                            break;
-                        case Type a when a == typeof(Quaternion):
-                            attrs.Add(new TypeConverterAttribute(typeof(QuaternionTypeConverter)));
-                            break;
-                        case Type a when a == typeof(Vector2):
-                            attrs.Add(new TypeConverterAttribute(typeof(Vector2TypeConverter)));
-                            break;
-                        case Type a when a == typeof(Engine.Color):
-                            attrs.Add(new EditorAttribute(typeof(ColorExEditor), typeof(UITypeEditor)));
-                            break;
-                        case Type a when a == typeof(Matrix):
-                            attrs.Add(new EditorAttribute(typeof(MatrixEditor), typeof(UITypeEditor)));
-                            break;
-                        case Type a when a == typeof(TemplatesDatabase.ValuesDictionary):
-                            attrs.Add(new TypeConverterAttribute(typeof(ValuesDictionaryConverter)));
-                            break;
-                    }
                     propertyDescriptors[index++] = new KeyValuePairPropertyDescriptor(item, attrs.ToArray());
                 }
                 return new PropertyDescriptorCollection(propertyDescriptors);
@@ -792,18 +778,18 @@ namespace SCEngine {
         public override AttributeCollection Attributes => new AttributeCollection(attrs);
     }
 
-    //public class ValuesDictionaryEditor : UITypeEditor {
-    //    public override UITypeEditorEditStyle GetEditStyle(ITypeDescriptorContext context) {
-    //        return UITypeEditorEditStyle.Modal;
-    //    }
+    public class ECSEditor : UITypeEditor {
+        public override UITypeEditorEditStyle GetEditStyle(ITypeDescriptorContext context) {
+            return UITypeEditorEditStyle.Modal;
+        }
 
-    //    public override object EditValue(ITypeDescriptorContext context, IServiceProvider provider, object value) {
-    //        InspectorWindow? inspectorWindow = Program.MainForm.FindSubwindow<InspectorWindow>();
-    //        if (inspectorWindow == null) {
-    //            inspectorWindow = (InspectorWindow?)Program.MainForm.AddSubwindow(new InspectorWindow(), DarkUI.Docking.DarkDockArea.Bottom);
-    //        }
-    //        inspectorWindow.DisplayObject = new ValuesDictionaryWrapper((TemplatesDatabase.ValuesDictionary)value);
-    //        return value;
-    //    }
-    //}
+        public override object EditValue(ITypeDescriptorContext context, IServiceProvider provider, object value) {
+            InspectorWindow? inspectorWindow = Program.MainForm.FindSubwindow<InspectorWindow>();
+            if (inspectorWindow == null) {
+                inspectorWindow = (InspectorWindow?)Program.MainForm.AddSubwindow(new InspectorWindow(), DarkUI.Docking.DarkDockArea.Bottom);
+            }
+            inspectorWindow.DisplayObject = new AutoBrowsableTypeDescriptor(TypeDescriptor.GetProvider(value).GetTypeDescriptor(value), value.GetType(), value, null);
+            return value;
+        }
+    }
 }
