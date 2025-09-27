@@ -1,0 +1,36 @@
+DEVELOPMENT RESTRICTION ADDENDUM
+
+Effective Date: 2025/1/1
+
+Repository: SCEngine
+Repository Owner: CS-LX
+
+1. Purpose
+This Addendum sets forth a restriction on contributions to the above-referenced repository. It is intended to identify persons who are explicitly disallowed from contributing code, documentation, issues, or any other form of development activity in this repository, subject to the terms below.
+
+2. Definitions
+"Restricted Individual" means the person identified below by name and by GitHub profile link:
+  Name: 把红色赋予黑海
+  GitHub profile: https://github.com/RegularSource
+
+"Development Activity" means any action that modifies, proposes to modify, or otherwise influences the repository contents or workflow, including but not limited to: commits, pull requests, issue creation, commenting on issues, editing wiki pages, changing repository settings, publishing releases, or merging code.
+
+3. Restriction
+From the Effective Date and for the duration of this Addendum, the Restricted Individual shall be expressly prohibited from performing any Development Activity in this repository. Additionally, this prohibition extends to any other GitHub account or person who uses the identical display name "把红色赋予黑海" (case insensitive) as shown on their GitHub profile page.
+
+Where specific identification is required, the GitHub profile link above shall be used as the authoritative reference for the individual covered by this Addendum.
+
+4. Exceptions
+Any exception to the restriction must be granted in writing by the Repository Owner (signed via a GitHub Issue comment or a signed document stored in the repository) and must explicitly reference this Addendum and the Restricted Individual by name and GitHub profile link.
+
+5. Enforcement
+If the Restricted Individual performs Development Activity in violation of this Addendum, the Repository Owner or designated maintainers reserve the right to take appropriate remedial actions, which may include but are not limited to: reverting unauthorized changes, blocking the offending GitHub account from repository collaboration, and closing or rejecting pull requests or issues created in violation of this Addendum.
+
+6. No Waiver of Other Rights
+This Addendum is not intended to limit any other rights or obligations of the Repository Owner under GitHub Terms of Service, applicable law, or repository governance documents. Nothing in this Addendum shall be interpreted as granting any additional legal rights to any third party.
+
+7. Severability
+If any provision of this Addendum is held to be invalid or unenforceable, the remainder of the Addendum shall remain in full force and effect.
+
+8. Acknowledgment
+By maintaining or enforcing this Addendum, the Repository Owner represents that they are acting within their authority with respect to the repository and that they understand the scope and limitations of this document.
